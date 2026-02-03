@@ -263,48 +263,35 @@ export default function Home() {
   });
 
   return (
-    <main className="min-h-screen w-full bg-background">
-      {/* Loading Progress Bar */}
-      {isLoading && (
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <Progress value={progress} className="h-1 rounded-none" />
-        </div>
-      )}
+  <main className="min-h-screen w-full bg-background relative overflow-hidden">
+    {/* Loading Progress Bar */}
+    {isLoading && (
+      <div className="fixed top-0 left-0 right-0 z-[100]">
+        <Progress value={progress} className="h-1 rounded-none" />
+      </div>
+    )}
 
-      {/* Square Stack Theme Transition Overlay */}
-      {showThemeTransition && (
-        <div className="fixed inset-0 z-40 pointer-events-none">
-          {/* Green Square */}
-          <div
-            className="fixed inset-0 bg-red-600 animate-square-1"
-            style={{
-              zIndex: 1,
-            }}
-          />
-          {/* White Square */}
-          <div
-            className="fixed inset-0 bg-white animate-square-2"
-            style={{
-              zIndex: 2,
-            }}
-          />
-          {/* Black Square */}
-          <div
-            className="fixed inset-0 bg-black animate-square-3 dark:hidden"
-            style={{
-              zIndex: 3,
-            }}
-          />
-          {/* Dark Mode - White Square */}
-          <div
-            className="fixed inset-0 bg-black hidden dark:block animate-square-3"
-            style={{
-              zIndex: 3,
-            }}
-          />
-        </div>
-      )}
-
+    {/* STEP 2: Letakkan Transition Overlay di sini */}
+    {showThemeTransition && (
+      <div className="fixed inset-0 z-[9999] pointer-events-none">
+        {/* Layer 1: Paling Bawah (Contoh: Merah) */}
+        <div
+          className="absolute inset-0 bg-red-600 animate-theme-slide"
+          style={{ animationDelay: '0ms' }}
+        />
+        {/* Layer 2: Tengah (Warna Kontras) */}
+        <div
+          className="absolute inset-0 bg-blue-600 animate-theme-slide"
+          style={{ animationDelay: '100ms' }}
+        />
+        {/* Layer 3: Paling Atas (Warna Background Tujuan) */}
+        {/* Gunakan variabel CSS --background agar otomatis menyesuaikan dark/light */}
+        <div
+          className="absolute inset-0 bg-[var(--background)] animate-theme-slide"
+          style={{ animationDelay: '200ms' }}
+        />
+      </div>
+    )}
       {/* Authors Dropdown */}
       {!isLoading && <AuthorsDropdown authors={authors} />}
 
