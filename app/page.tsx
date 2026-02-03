@@ -50,32 +50,38 @@ const authors: Author[] = [
   {
     id: '1',
     username: 'Nelsen Chandra',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png',
-    email: 'xynelsdesign@gmail.com',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+    email: 'nelsen@example.com',
   },
   {
     id: '2',
-    username: 'Armageddon',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
-    email: 'armageddondesign@gmail.com',
+    username: 'Designer Co.',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    email: 'design@example.com',
+  },
+  {
+    id: '3',
+    username: 'Developer Team',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+    email: 'dev@example.com',
   },
 ]
 
 const footerAvatars = [
   {
-    src: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png',
-    alt: '@nelsen',
-    fallback: 'NC',
+    src: 'https://github.com/shadcn.png',
+    alt: '@shadcn',
+    fallback: 'CN',
   },
   {
-    src: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
-    alt: '@armageddon',
-    fallback: 'AR',
+    src: 'https://github.com/maxleiter.png',
+    alt: '@maxleiter',
+    fallback: 'ML',
   },
   {
-    src: 'https://ik.imagekit.io/8sxh7zirl/c9309af26cdf4a49443dde98b742a666.jpg?updatedAt=1760965529709',
-    alt: '@Nero',
-    fallback: 'NR',
+    src: 'https://github.com/evilrabbit.png',
+    alt: '@evilrabbit',
+    fallback: 'ER',
   },
   {
     src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=400&fit=crop',
@@ -98,10 +104,10 @@ const links: LinkItem[] = [
   {
     id: '1',
     title: 'Portfolio Website',
-    url: 'https://nelsen.my.id',
+    url: 'https://vercel.com',
     tag: 'Portfolio',
     icon: <Briefcase className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/nelsen-chandra-web.png',
+    thumbnail: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1280&h=720&fit=crop',
     showThumbnail: true,
     thumbnailTag: 'Featured',
     showThumbnailTag: true,
@@ -114,7 +120,7 @@ const links: LinkItem[] = [
   {
     id: '2',
     title: 'GitHub Profile',
-    url: 'https://github.com/nerusen',
+    url: 'https://github.com',
     tag: 'Code',
     icon: <Github className="w-5 h-5" />,
     showNotification: true,
@@ -123,53 +129,48 @@ const links: LinkItem[] = [
   },
   {
     id: '3',
-    title: 'Instagram',
-    url: 'https://instagram.com/n31sen.st',
-    tag: 'Social',
+    title: 'LinkedIn',
+    url: 'https://linkedin.com',
+    tag: 'Professional',
     icon: <Linkedin className="w-5 h-5" />,
   },
   {
     id: '4',
     title: 'Email Me',
-    url: 'mailto:xynelsdesign@gmail.com',
+    url: 'mailto:hello@example.com',
     tag: 'Contact',
     icon: <Mail className="w-5 h-5" />,
   },
   {
     id: '5',
-    title: 'Repository',
-    url: 'https://github.com/nerusen/nelsen.my.id',
-    tag: 'Repo',
+    title: 'My Blog',
+    url: 'https://vercel.com/blog',
+    tag: 'Writing',
     icon: <FileText className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/nelsen-chandra-web.png',
-    showThumbnail: false,
+    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1280&h=720&fit=crop',
+    showThumbnail: true,
     thumbnailTag: 'Latest Post',
-    showThumbnailTag: false,
+    showThumbnailTag: true,
     thumbnailTagBg: 'bg-purple-500/80',
     thumbnailTagText: 'text-white',
     showNotification: true,
-    notificationTitle: 'Visiting Repo',
-    notificationDescription: 'Check out our latest repository',
+    notificationTitle: 'Visiting Blog',
+    notificationDescription: 'Read my latest articles and insights',
   },
   {
     id: '6',
-    title: 'Project Preview',
-    url: 'https://nelsen.my.id/projects',
+    title: 'GitHub Repository',
+    url: 'https://github.com',
     tag: 'Projects',
     icon: <Code className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251214_115428.png?updatedAt=1767193208348',
-    showThumbnail: true,
-    showNotification: true,
-    notificationTitle: 'Visiting Projects',
-    notificationDescription: 'Check out our latest projects',
   },
   {
     id: '7',
     title: 'Personal Website',
-    url: 'https://nerusen.web.id',
+    url: 'https://vercel.com',
     tag: 'Web',
     icon: <Globe className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251015_173931.png',
+    thumbnail: 'https://images.unsplash.com/photo-1467232557153-f403bf289096?w=1280&h=720&fit=crop',
     showThumbnail: true,
     thumbnailTag: 'Live Project',
     showThumbnailTag: true,
@@ -181,9 +182,9 @@ const links: LinkItem[] = [
   },
   {
     id: '8',
-    title: 'Pricelist',
-    url: 'https://nelsen.my.id/price-list',
-    tag: 'Market',
+    title: 'Twitter/X',
+    url: 'https://twitter.com',
+    tag: 'Social',
     icon: <Twitter className="w-5 h-5" />,
   },
 ]
@@ -341,7 +342,7 @@ export default function Home() {
         <AvatarSection avatars={footerAvatars} />
         
         {/* Copyright */}
-        <p className="text-xs text-muted-foreground">©Copyright by Nelsen Chandra 2026, All Rights Reserved.</p>
+        <p className="text-xs text-muted-foreground">©Copyright by Nelsen Chandra 2026</p>
       </footer>
     </main>
   )
