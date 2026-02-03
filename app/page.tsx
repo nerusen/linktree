@@ -68,19 +68,19 @@ const authors: Author[] = [
 
 const footerAvatars = [
   {
-    src: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png',
+    src: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg',
     alt: '@nelsen',
     fallback: 'NC',
   },
   {
-    src: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
-    alt: '@armageddon',
-    fallback: 'AR',
+    src: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul84_20260201143821.png',
+    alt: '@nerusen',
+    fallback: 'NR',
   },
   {
     src: 'https://ik.imagekit.io/8sxh7zirl/c9309af26cdf4a49443dde98b742a666.jpg?updatedAt=1760965529709',
-    alt: '@Nero',
-    fallback: 'NR',
+    alt: '@nero',
+    fallback: 'NE',
   },
   {
     src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=400&fit=crop',
