@@ -245,35 +245,14 @@ export default function Home() {
       {showThemeTransition && (
         <div className="fixed inset-0 z-40 pointer-events-none">
           {/* Green Square */}
-          <div
-            className="fixed inset-0 bg-red-600 animate-square-1"
-            style={{
-              zIndex: 1,
-            }}
-          />
+          <div className="layer-red animate-overlay-smooth" style={{ animationDelay: '0ms' }}></div>
           {/* White Square */}
-          <div
-            className="fixed inset-0 bg-white animate-square-2"
-            style={{
-              zIndex: 2,
-            }}
-          />
+          <div className="layer-black animate-overlay-smooth" style={{ animationDelay: '120ms' }}></div>
           {/* Black Square */}
-          <div
-            className="fixed inset-0 bg-black animate-square-3 dark:hidden"
-            style={{
-              zIndex: 3,
-            }}
-          />
-          {/* Dark Mode - White Square */}
-          <div
-            className="fixed inset-0 bg-black hidden dark:block animate-square-3"
-            style={{
-              zIndex: 3,
-            }}
-          />
-        </div>
-      )}
+          <div className="layer-white animate-overlay-smooth" style={{ animationDelay: '240ms' }}></div>
+          {/* Konten Utama: Delay 1s agar muncul saat layer putih mulai membuka layar */}
+      <div className="content-fade-in" style={{ animationDelay: '1s' }}>
+        <div className="max-w-md mx-auto px-6 py-12 relative z-10">
 
       {/* Authors Dropdown */}
       {!isLoading && <AuthorsDropdown authors={authors} />}
@@ -286,14 +265,27 @@ export default function Home() {
           <div className="space-y-8">
             {/* Profile Section with skeleton animation */}
             <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
-              <ProfileSection
-                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png"
-                name="n31sen.st"
-                subtitle="Graphic Designer"
-                bio="Welcome to my Link. #CreateLimitlessCreativity"
-              />
-            </div>
-
+              <ProfileSection />
+          
+          {/* List Links dengan Staggered Entrance */}
+          <div className="space-y-3 mt-8">
+            {isLoading ? (
+              // Skeleton loading...
+            ) : (
+              filteredLinks.map((link, index) => (
+                <div 
+                  key={link.id} 
+                  className="content-fade-in"
+                  style={{ 
+                    // Muncul berurutan setelah header selesai animasi
+                    animationDelay: `${1.1 + (index * 0.08)}s` 
+                  }}
+                >
+                  <LinkButton {...link} />
+                </div>
+              ))
+            }
+          </div>
             {/* Filter Section */}
             {!isLoading && (
               <LinkFilter 
