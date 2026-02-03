@@ -207,15 +207,16 @@
     0% {
       transform: translateY(100%);
     }
-    /* Posisi 50% adalah saat layar tertutup penuh */
-    50% {
+    /* 40% - 60%: Layar tertutup penuh. 
+       Ini memberi waktu bagi tema untuk berubah di balik layar */
+    40%, 60% {
       transform: translateY(0);
     }
     100% {
       transform: translateY(-100%);
     }
-   }
-
+  }
+  
   @keyframes themeTransition {
     from {
       opacity: 0;
@@ -226,15 +227,15 @@
   }
 
   .animate-square-1 {
-    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) both;
+    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) both;
   }
 
   .animate-square-2 {
-    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.1s both;
+    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) 0.1s both;
   }
 
   .animate-square-3 {
-    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.2s both;
+    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) 0.2s both;
   }
 
   .animate-fade-in-up {
