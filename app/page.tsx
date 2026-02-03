@@ -10,6 +10,7 @@ import FAQSection from '@/components/faq-section'
 import AuthorsDropdown from '@/components/authors-dropdown'
 import LinkFilter from '@/components/link-filter'
 import AvatarSection from '@/components/avatar-section'
+import { AnimatedBeamDemo } from '@/components/animated-beam-section'
 import { Progress } from '@/components/ui/progress'
 import {
   Github,
@@ -290,6 +291,11 @@ export default function Home() {
                 bio="Crafting elegant digital experiences with code and design. Passionate about building performant, accessible web applications."
               />
             </div>
+
+            {/* Animated Beam Section */}
+            {!isLoading && (
+              <AnimatedBeamDemo />
+            )}
 
             {/* Filter Section */}
             {!isLoading && (

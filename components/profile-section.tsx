@@ -61,11 +61,11 @@ export default function ProfileSection({
           </div>
 
           {/* Profile Photo - Overlapping */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2">
-            <div className="google-profile-border relative">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-card" style={{ zIndex: 10 }}>
+          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 z-20">
+            <div className="google-profile-border">
+              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-card flex-shrink-0">
                 {imageLoading && !imageError && (
-                  <div className="absolute inset-0 bg-muted rounded-full animate-shimmer" />
+                  <div className="absolute inset-0 rounded-full animate-shimmer" />
                 )}
                 {profileImage && !imageError ? (
                   <Image
@@ -73,6 +73,7 @@ export default function ProfileSection({
                     alt={name}
                     fill
                     className="rounded-full object-cover"
+                    sizes="128px"
                     onLoadingComplete={() => setImageLoading(false)}
                     onError={() => {
                       setImageError(true)
