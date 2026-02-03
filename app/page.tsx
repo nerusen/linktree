@@ -66,6 +66,22 @@ const authors: Author[] = [
   },
 ]
 
+const toggleTheme = () => {
+  // 1. Munculkan animasi transisi
+  setShowThemeTransition(true);
+
+  // 2. Tunda perubahan tema sampai layar tertutup penuh oleh animasi
+  // Karena durasi total 1.5s, layar tertutup penuh sekitar 0.7s
+  setTimeout(() => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  }, 750); 
+
+  // 3. Hilangkan komponen transisi setelah seluruh animasi selesai (1.5s + delay)
+  setTimeout(() => {
+    setShowThemeTransition(false);
+  }, 1800);
+};
+  
 const footerAvatars = [
   {
     src: 'https://ik.imagekit.io/8sxh7zirl/56ba9b177b33f8a9f1114305baa2d3bb.jpg?updatedAt=1760922593332',
