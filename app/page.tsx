@@ -110,7 +110,7 @@ const links: LinkItem[] = [
     showThumbnail: true,
     thumbnailTag: 'Featured',
     showThumbnailTag: true,
-    thumbnailTagBg: 'bg-red-400/50 backdrop-blur-sm border border-red-400 rounded-full',
+    thumbnailTagBg: 'bg-red-600/50 backdrop-blur-sm border border-red-600 rounded-full',
     thumbnailTagText: 'text-white font-bold',
     showNotification: true,
     notificationTitle: 'Opening Portfolio',
