@@ -318,12 +318,15 @@ export default function Home() {
                 </>
               ) : (
                 filteredLinks.length > 0 ? (
-                  filteredLinks.map((link) => (
-                    <LinkButton
-                      key={link.id}
-                      {...link}
-                    />
-                  ))
+    filteredLinks.map((link, index) => ( // Tambahkan index di sini
+      <div 
+        key={link.id} 
+        className="animate-fade-in-up opacity-0" // opacity-0 agar tidak muncul tiba-tiba sebelum animasi
+        style={{ animationDelay: `${index * 100}ms` }} // Jeda 100ms antar link
+      >
+        <LinkButton {...link} />
+      </div>
+    ))
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
                     <p className="text-sm">No links found for this category</p>
