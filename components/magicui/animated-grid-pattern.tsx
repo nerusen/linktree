@@ -88,3 +88,5 @@ export function AnimatedGridPattern({
     </svg>
   )
 }
+
+export default AnimatedGridPattern

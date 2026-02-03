@@ -10,8 +10,8 @@ import FAQSection from '@/components/faq-section'
 import AuthorsDropdown from '@/components/authors-dropdown'
 import LinkFilter from '@/components/link-filter'
 import AvatarSection from '@/components/avatar-section'
-import { AnimatedBeamDemo } from '@/components/animated-beam-section'
-import { AnimatedGridPattern } from '@/components/magicui/animated-grid-pattern'
+import { GridPattern } from '@/components/magicui/grid-pattern'
+import { TypingAnimation } from '@/components/magicui/typing-animation'
 import { Marquee3D } from '@/components/marquee-3d-section'
 import { Safari } from '@/components/magicui/safari'
 import { ClientTweetCard } from '@/components/magicui/client-tweet-card'
@@ -27,6 +27,8 @@ import {
   Code,
   Globe,
 } from 'lucide-react'
+import AnimatedGridPattern from '@/components/magicui/animated-grid-pattern' // Import AnimatedGridPattern
+import AnimatedBeamDemo from '@/components/animated-beam-section' // Import AnimatedBeamDemo
 
 interface LinkItem {
   id: string
@@ -236,17 +238,23 @@ export default function Home() {
 
   return (
     <main className="min-h-screen w-full bg-background relative overflow-hidden">
-      {/* Animated Grid Pattern Background */}
+      {/* Grid Pattern Background */}
       <div className="absolute inset-0 -z-10">
-        <AnimatedGridPattern
-          numSquares={30}
-          maxOpacity={0.1}
-          duration={3}
-          repeatDelay={1}
+        <GridPattern
+          squares={[
+            [4, 4],
+            [5, 1],
+            [8, 2],
+            [5, 3],
+            [5, 5],
+            [10, 10],
+            [12, 15],
+            [15, 10],
+          ]}
           className={cn(
-            "text-foreground/20",
-            "mask-[radial-gradient(500px_circle_at_center,white,transparent)]",
-            "inset-x-0 inset-y-[-30%] h-[200%]"
+            "text-foreground/10",
+            "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
           )}
         />
       </div>
@@ -312,9 +320,11 @@ export default function Home() {
               />
             </div>
 
-            {/* Animated Beam Section */}
+            {/* Typing Animation */}
             {!isLoading && (
-              <AnimatedBeamDemo />
+              <div className="mt-8">
+                <TypingAnimation>Explore my work across different categories</TypingAnimation>
+              </div>
             )}
 
             {/* Filter Section */}
@@ -364,19 +374,17 @@ export default function Home() {
 
             {/* Safari Browser Mockup */}
             {!isLoading && (
-              <div className="mt-12 flex justify-center">
-                <div className="w-full max-w-2xl">
-                  <Safari
-                    url="nelsendesign.com"
-                    imageSrc="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=1200&h=750&fit=crop"
-                  />
-                </div>
+              <div className="mt-16 w-full">
+                <Safari
+                  url="nelsendesign.com"
+                  imageSrc="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=1200&h=750&fit=crop"
+                />
               </div>
             )}
 
             {/* Tweet Card Section */}
             {!isLoading && (
-              <div className="mt-12 flex justify-center">
+              <div className="mt-16 w-full">
                 <ClientTweetCard />
               </div>
             )}

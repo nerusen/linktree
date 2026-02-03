@@ -36,22 +36,17 @@ export default function ProfileSection({
         {/* Banner Section */}
         <div className="relative w-full bg-card rounded-3xl overflow-hidden border border-border shadow-sm">
           {/* Banner Image */}
-          <div className="relative w-full h-40 bg-muted">
-            {bannerLoading && !bannerError && (
-              <div className="absolute inset-0 bg-muted animate-shimmer" />
-            )}
+          <div className="relative w-full h-40 bg-muted overflow-hidden">
             {bannerImage && !bannerError ? (
-              <Image
+              <img
                 src={bannerImage || "/placeholder.svg"}
                 alt="Banner"
-                fill
-                className="object-cover"
-                onLoadingComplete={() => setBannerLoading(false)}
+                className="w-full h-full object-cover"
+                onLoad={() => setBannerLoading(false)}
                 onError={() => {
                   setBannerError(true)
                   setBannerLoading(false)
                 }}
-                crossOrigin="anonymous"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-muted-foreground">
@@ -63,23 +58,17 @@ export default function ProfileSection({
           {/* Profile Photo - Overlapping */}
           <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 translate-y-1/2 z-20">
             <div className="google-profile-border">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-card flex-shrink-0">
-                {imageLoading && !imageError && (
-                  <div className="absolute inset-0 rounded-full animate-shimmer" />
-                )}
+              <div className="w-32 h-32 rounded-full overflow-hidden bg-card flex-shrink-0">
                 {profileImage && !imageError ? (
-                  <Image
+                  <img
                     src={profileImage || "/placeholder.svg"}
                     alt={name}
-                    fill
-                    className="rounded-full object-cover"
-                    sizes="128px"
-                    onLoadingComplete={() => setImageLoading(false)}
+                    className="w-full h-full rounded-full object-cover"
+                    onLoad={() => setImageLoading(false)}
                     onError={() => {
                       setImageError(true)
                       setImageLoading(false)
                     }}
-                    crossOrigin="anonymous"
                   />
                 ) : (
                   <div className="w-full h-full rounded-full bg-muted flex items-center justify-center text-muted-foreground">

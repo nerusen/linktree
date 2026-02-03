@@ -70,3 +70,5 @@ export function AnimatedBeamDemo() {
     </div>
   )
 }
+
+export default AnimatedBeamDemo
