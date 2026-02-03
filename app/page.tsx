@@ -106,7 +106,7 @@ const links: LinkItem[] = [
     url: 'https://nelsen.my.id',
     tag: 'Portfolio',
     icon: <Brush className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/nelsen-chandra-web.png',
+    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg',
     showThumbnail: true,
     thumbnailTag: 'Featured',
     showThumbnailTag: true,
