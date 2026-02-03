@@ -140,6 +140,19 @@
     }
   }
 
+  @keyframes fadeInUpBlur {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
   @keyframes fadeInScale {
     from {
       opacity: 0;
@@ -248,6 +261,10 @@
 
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-fade-in-up {
+  animation: fadeInUpBlur 0.6s ease-out forwards;
   }
 
   .animate-fade-in-scale {
