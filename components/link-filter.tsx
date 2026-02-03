@@ -31,7 +31,7 @@ export default function LinkFilter({ tags, selectedTag, onTagChange }: LinkFilte
       <div className="w-full flex justify-center">
         <Alert className="w-full max-w-md border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-900/40 dark:text-red-300 rounded-lg shadow-sm">
           <AlertTriangleIcon className="h-4 w-4" />
-          <AlertTitle>Website in Trial Stage</AlertTitle>
+          <AlertTitle>The website is still under development</AlertTitle>
           <AlertDescription>
             This website is currently in trial/development stage. Some features may be incomplete or subject to change.
           </AlertDescription>
