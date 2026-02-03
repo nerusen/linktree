@@ -55,13 +55,13 @@ const authors: Author[] = [
   {
     id: '1',
     username: 'Nelsen Chandra',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png',
+    avatar: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg',
     email: 'nelsenchandra@gmail.com',
   },
   {
     id: '2',
     username: 'Nerusen',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
+    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul84_20260201143821.png',
     email: 'nerusendesign@gmail.com',
   },
 ]
@@ -287,10 +287,10 @@ export default function Home() {
             {/* Profile Section with skeleton animation */}
             <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
               <ProfileSection
-                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png?updatedAt=1770040741025"
-                name="Nelsen Chandra"
-                subtitle="Full Stack Developer & Designer"
-                bio="Crafting elegant digital experiences with code and design. Passionate about building performant, accessible web applications."
+                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul84_20260201143821.png"
+                name="n31sen.st"
+                subtitle="Graphic Designer"
+                bio="Create limitless creativity."
               />
             </div>
 
