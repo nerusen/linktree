@@ -110,7 +110,7 @@ const links: LinkItem[] = [
     showThumbnail: true,
     thumbnailTag: 'Featured',
     showThumbnailTag: true,
-    thumbnailTagBg: 'bg-red-400/50 backdrop-blur-sm border border-lime-400 rounded-full',
+    thumbnailTagBg: 'bg-red-400/50 backdrop-blur-sm border border-red-400 rounded-full',
     thumbnailTagText: 'text-white font-bold',
     showNotification: true,
     notificationTitle: 'Opening Portfolio',
@@ -290,7 +290,7 @@ export default function Home() {
                 profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png"
                 name="n31sen.st"
                 subtitle="Graphic Designer"
-                bio="Create limitless creativity."
+                bio="Welcome to my Link. #CreateLimitlessCreativity"
               />
             </div>
 
