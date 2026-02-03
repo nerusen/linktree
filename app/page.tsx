@@ -56,13 +56,13 @@ const authors: Author[] = [
     id: '1',
     username: 'Nelsen Chandra',
     avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png',
-    email: 'xynelsdesign@gmail.com',
+    email: 'nelsenchandra@gmail.com',
   },
   {
     id: '2',
-    username: 'Armageddon',
+    username: 'Nerusen',
     avatar: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
-    email: 'armageddondesign@gmail.com',
+    email: 'nerusendesign@gmail.com',
   },
 ]
 
