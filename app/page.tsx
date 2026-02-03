@@ -278,7 +278,6 @@ export default function Home() {
             }}
           />
         </div>
-      )}
 
       {/* Authors Dropdown */}
       {!isLoading && <AuthorsDropdown authors={authors} />}
