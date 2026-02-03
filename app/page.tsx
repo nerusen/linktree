@@ -61,7 +61,7 @@ const authors: Author[] = [
   {
     id: '2',
     username: 'Nerusen',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul84_20260201143821.png',
+    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png',
     email: 'nerusendesign@gmail.com',
   },
 ]
@@ -287,7 +287,7 @@ export default function Home() {
             {/* Profile Section with skeleton animation */}
             <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
               <ProfileSection
-                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul84_20260201143821.png"
+                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png"
                 name="n31sen.st"
                 subtitle="Graphic Designer"
                 bio="Create limitless creativity."
