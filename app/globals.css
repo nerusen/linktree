@@ -140,24 +140,6 @@
     }
   }
 
-  @keyframes fadeInUpBlur {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    filter: blur(10px);
-  }
-  /* Bagian 50% adalah saat elemen mulai terlihat jelas namun bergerak lambat */
-  50% {
-    opacity: 0.8;
-    filter: blur(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-    }
-  }
-
   @keyframes fadeInScale {
     from {
       opacity: 0;
@@ -210,26 +192,6 @@
     }
   }
 
-  @keyframes slideOverlay {
-  0% { transform: translateY(100%); }
-  /* Titik 45% sampai 55% adalah masa 'tertahan' di tengah layar */
-  45%, 55% { transform: translateY(0%); }
-  100% { transform: translateY(-100%); }
-  }
-
-  @keyframes contentEntrance {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-   }
-  }
-
   @keyframes squareSlideUp1 {
     0% {
       transform: translateY(100%);
@@ -272,25 +234,6 @@
     }
   }
 
-.layer-red { background-color: #DB4437; z-index: 60; }
-.layer-black { background-color: #1a1a1a; z-index: 61; }
-/* Layer putih menggunakan variabel background agar sinkron dengan tema */
-.layer-white { background-color: var(--background); z-index: 62; }
-
-.animate-overlay-smooth {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  /* Durasi 1.6s agar transisi terasa lebih 'mahal' dan tidak terburu-buru */
-  animation: slideOverlay 1.6s cubic-bezier(0.85, 0, 0.15, 1) forwards;
-}
-
-.content-fade-in {
-  opacity: 0;
-  animation: contentEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
   .animate-square-1 {
     animation: squareSlideUp1 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -305,10 +248,6 @@
 
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
-  }
-
-  .animate-fade-in-up {
-  animation: fadeInUpBlur 0.6s ease-out forwards;
   }
 
   .animate-fade-in-scale {
@@ -332,12 +271,6 @@
 
   .animate-theme-transition {
     animation: themeTransition 0.3s ease-out;
-  }
-
-  .animate-smooth-stagger {
-  /* Durasi 0.8s agar terasa sedikit lebih lama dan premium */
-  /* cubic-bezier(0.65, 0, 0.35, 1) memberikan efek 'slow' di tengah */
-  animation: fadeInUpBlur 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
   }
 
   .google-profile-border {
