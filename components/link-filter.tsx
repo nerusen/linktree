@@ -39,7 +39,7 @@ export default function LinkFilter({
       <div className="w-full flex justify-center">
         <Alert className="w-full max-w-md border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-900/40 dark:text-red-300 rounded-lg shadow-sm">
           <AlertTriangleIcon className="h-4 w-4" />
-          <AlertTitle>Website in Trial Stage</AlertTitle>
+          <AlertTitle>Website dalam tahap uji coba</AlertTitle>
           <AlertDescription>
             Fitur masih dalam tahap pengembangan. Jangan ragu untuk melaporkan bug kepada author, terimakasih.
           </AlertDescription>
