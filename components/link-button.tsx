@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { ExternalLink } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { BorderBeam } from '@/components/magicui/border-beam'
 import { toast } from 'sonner'
 
 interface LinkButtonProps {
@@ -70,7 +71,18 @@ export default function LinkButton({
       className="group w-full text-left transition-all duration-300 animate-fade-in-up"
       style={{ animationDelay: `${parseInt(id) * 50}ms` }}
     >
-      <div className="relative rounded-lg border border-border bg-card hover:bg-secondary/50 transition-colors duration-300 overflow-hidden">
+      <div className="relative rounded-lg border border-border bg-card hover:bg-secondary/50 transition-colors duration-300 overflow-hidden group">
+        {/* Spiraling Border Beam Animation */}
+        <BorderBeam
+          size={35}
+          initialOffset={15}
+          className="from-accent/40 via-accent/60 to-accent/20"
+          transition={{
+            type: 'spring',
+            stiffness: 35,
+            damping: 25,
+          }}
+        />
         {/* Thumbnail - 16:9 Landscape */}
         {showThumbnail && thumbnail && (
           <div className="relative w-full bg-muted overflow-hidden" style={{ aspectRatio: '16 / 9' }}>
