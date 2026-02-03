@@ -246,7 +246,7 @@ export default function Home() {
         <div className="fixed inset-0 z-40 pointer-events-none">
           {/* Green Square */}
           <div
-            className="fixed inset-0 bg-green-500 animate-square-1"
+            className="fixed inset-0 bg-red-600 animate-square-1"
             style={{
               zIndex: 1,
             }}
