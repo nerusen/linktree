@@ -260,20 +260,76 @@
   100% {
     background-position: 0% 50%;
     }
+@layer utilities {
+  .grid-background {
+    @apply bg-background;
   }
-
-  .fade-in-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
+  .animate-gradient-flow {
+    background-size: 200% 200%;
+    animation: gradientFlow 6s ease infinite;
   }
 
   @keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInFromLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+
+  @keyframes themeSlideUp {
+    0% { transform: translateY(100%); }
+    45%, 55% { transform: translateY(0%); } 
+    100% { transform: translateY(-100%); }
+  }
+
+  .animate-theme-slide {
+    animation: themeSlideUp 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  /* Perbaikan di sini: Menghapus duplikasi fadeInUp yang rusak */
 
   .animate-square-1 {
     animation: squareSlideUp1 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -287,18 +343,6 @@
     animation: squareSlideUp3 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
   }
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  .animate-fade-in-scale {
-    animation: fadeInScale 0.5s ease-out;
-  }
-
-  .animate-slide-in-left {
-    animation: slideInFromLeft 0.5s ease-out;
-  }
-
   .animate-shimmer {
     animation: shimmer 2s infinite;
     background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
@@ -308,10 +352,6 @@
   .dark .animate-shimmer {
     background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%);
     background-size: 1000px 100%;
-  }
-
-  .animate-theme-transition {
-    animation: themeTransition 0.3s ease-out;
   }
 
   .google-profile-border {
@@ -344,12 +384,12 @@
     background: #121212;
   }
 
-  /* Sonner Toast Dark Theme */
   .dark [data-sonner-toaster] {
     --background: oklch(0.11 0 0);
     --border: oklch(0.25 0 0);
     --text: oklch(0.95 0 0);
   }
+}
 
   [data-sonner-toast] {
     @apply dark:bg-black dark:text-white dark:border-neutral-800;
