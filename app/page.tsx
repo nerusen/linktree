@@ -284,6 +284,7 @@ export default function Home() {
             <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
               <ProfileSection
                 profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png?updatedAt=1770040741025"
+                bannerImage="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=800&h=320&fit=crop"
                 name="Nelsen Chandra"
                 subtitle="Full Stack Developer & Designer"
                 bio="Crafting elegant digital experiences with code and design. Passionate about building performant, accessible web applications."
