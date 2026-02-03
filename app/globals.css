@@ -192,36 +192,14 @@
     }
   }
 
-  @keyframes squareSlideUp1 {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  @keyframes squareSlideUp {
+  0% {
+    transform: translateY(30px); /* Jarak lebih pendek agar elegan */
+    opacity: 0;
   }
-
-  @keyframes squareSlideUp2 {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes squareSlideUp3 {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
+  100% {
+    transform: translateY(0);
+    opacity: 1;
     }
   }
 
@@ -235,15 +213,15 @@
   }
 
   .animate-square-1 {
-    animation: squareSlideUp1 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .animate-square-2 {
-    animation: squareSlideUp2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
 
   .animate-square-3 {
-    animation: squareSlideUp3 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   }
 
   .animate-fade-in-up {
