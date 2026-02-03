@@ -282,7 +282,7 @@ export default function Home() {
             {/* Profile Section with skeleton animation */}
             <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
               <ProfileSection
-                profileImage="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+                profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul42_20260115160409.png?updatedAt=1770040741025"
                 name="Nelsen Chandra"
                 subtitle="Full Stack Developer & Designer"
                 bio="Crafting elegant digital experiences with code and design. Passionate about building performant, accessible web applications."
@@ -341,7 +341,7 @@ export default function Home() {
         <AvatarSection avatars={footerAvatars} />
         
         {/* Copyright */}
-        <p className="text-xs text-muted-foreground">©Copyright by Nelsen Chandra 2026</p>
+        <p className="text-xs text-muted-foreground">©Copyright by Nelsen Chandra 2026, All Rights Reserved.</p>
       </footer>
     </main>
   )
