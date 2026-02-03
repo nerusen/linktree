@@ -66,22 +66,6 @@ const authors: Author[] = [
   },
 ]
 
-const toggleTheme = () => {
-  // 1. Munculkan animasi transisi
-  setShowThemeTransition(true);
-
-  // 2. Tunda perubahan tema sampai layar tertutup penuh oleh animasi
-  // Karena durasi total 1.5s, layar tertutup penuh sekitar 0.7s
-  setTimeout(() => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  }, 750); 
-
-  // 3. Hilangkan komponen transisi setelah seluruh animasi selesai (1.5s + delay)
-  setTimeout(() => {
-    setShowThemeTransition(false);
-  }, 1800);
-};
-  
 const footerAvatars = [
   {
     src: 'https://ik.imagekit.io/8sxh7zirl/56ba9b177b33f8a9f1114305baa2d3bb.jpg?updatedAt=1760922593332',
@@ -259,17 +243,28 @@ export default function Home() {
 
       {/* Square Stack Theme Transition Overlay */}
       {showThemeTransition && (
-  <div className="fixed inset-0 z-[9999] pointer-events-none">
-    {/* Layer 1: Merah (Akan tersapu oleh layer berikutnya) */}
-    <div className="fixed inset-0 bg-red-600 animate-square-1" />
-    
-    {/* Layer 2: Putih (Memberikan efek kontras) */}
-    <div className="fixed inset-0 bg-white animate-square-2" />
-    
-    {/* Layer 3: Background Final (Menutup transisi dengan rapi) */}
-    <div className="fixed inset-0 bg-black dark:bg-black animate-square-3" />
-  </div>
-)}
+        <div className="fixed inset-0 z-40 pointer-events-none">
+          {/* Green Square */}
+          <div
+            className="fixed inset-0 bg-red-600 animate-square-1"
+            style={{
+              zIndex: 1,
+            }}
+          />
+          {/* White Square */}
+          <div
+            className="fixed inset-0 bg-white animate-square-2"
+            style={{
+              zIndex: 2,
+            }}
+          />
+          {/* Black Square */}
+          <div
+            className="fixed inset-0 bg-black animate-square-3 dark:hidden"
+            style={{
+              zIndex: 3,
+            }}
+          />
           {/* Dark Mode - White Square */}
           <div
             className="fixed inset-0 bg-black hidden dark:block animate-square-3"
@@ -278,6 +273,7 @@ export default function Home() {
             }}
           />
         </div>
+      )}
 
       {/* Authors Dropdown */}
       {!isLoading && <AuthorsDropdown authors={authors} />}

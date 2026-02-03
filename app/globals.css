@@ -192,31 +192,39 @@
     }
   }
 
-  @keyframes squareSlideUp {
-  0% {
-    transform: translateY(30px); /* Jarak lebih pendek agar elegan */
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
+  @keyframes squareSlideUp1 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 
-  @keyframes squareReveal {
+  @keyframes squareSlideUp2 {
     0% {
       transform: translateY(100%);
-    }
-    /* 40% - 60%: Layar tertutup penuh. 
-       Ini memberi waktu bagi tema untuk berubah di balik layar */
-    40%, 60% {
-      transform: translateY(0);
+      opacity: 0;
     }
     100% {
-      transform: translateY(-100%);
+      transform: translateY(0);
+      opacity: 1;
     }
   }
-  
+
+  @keyframes squareSlideUp3 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
   @keyframes themeTransition {
     from {
       opacity: 0;
@@ -227,15 +235,15 @@
   }
 
   .animate-square-1 {
-    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) both;
+    animation: squareSlideUp1 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .animate-square-2 {
-    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) 0.1s both;
+    animation: squareSlideUp2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
   }
 
   .animate-square-3 {
-    animation: squareReveal 1.5s cubic-bezier(0.8, 0, 0.2, 1) 0.2s both;
+    animation: squareSlideUp3 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
   }
 
   .animate-fade-in-up {
