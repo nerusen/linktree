@@ -203,6 +203,19 @@
     }
   }
 
+  @keyframes squareReveal {
+    0% {
+      transform: translateY(100%);
+    }
+    /* Posisi 50% adalah saat layar tertutup penuh */
+    50% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+   }
+
   @keyframes themeTransition {
     from {
       opacity: 0;
@@ -213,15 +226,15 @@
   }
 
   .animate-square-1 {
-  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) both;
   }
 
   .animate-square-2 {
-  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.1s both;
   }
 
   .animate-square-3 {
-  animation: squareSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    animation: squareReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.2s both;
   }
 
   .animate-fade-in-up {
