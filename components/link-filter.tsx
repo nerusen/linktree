@@ -41,7 +41,7 @@ export default function LinkFilter({
           <AlertTriangleIcon className="h-4 w-4" />
           <AlertTitle>Website in Trial Stage</AlertTitle>
           <AlertDescription>
-            This website is currently in trial/development stage.
+            Fitur masih dalam tahap pengembangan. Jangan ragu untuk melaporkan bug kepada author, terimakasih.
           </AlertDescription>
         </Alert>
       </div>
