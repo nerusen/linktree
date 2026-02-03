@@ -21,15 +21,17 @@ export default function LinkFilter({ tags, selectedTag, onTagChange }: LinkFilte
   const uniqueTags = ['All', ...tags]
 
   const handleChange = (value: string) => {
-    // Prevent default behavior and only update the filter state
     onTagChange(value === 'All' ? null : value)
   }
 
   return (
-    <div className="w-full space-y-4 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-      <div className="flex justify-center">
+    // Flex-col memastikan konten berderet ke bawah
+    <div className="w-full flex flex-col items-center space-y-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+      
+      {/* Container Select */}
+      <div className="w-full flex justify-center">
         <Select value={selectedTag || 'All'} onValueChange={handleChange}>
-          <SelectTrigger className="w-full max-w-xs bg-card/50 backdrop-blur-sm border-border/50 hover:bg-secondary/50 transition-colors cursor-pointer">
+          <SelectTrigger className="w-full max-w-xs bg-card/50 backdrop-blur-sm border-border/50 hover:bg-secondary/50 transition-colors cursor-pointer rounded-md">
             <SelectValue placeholder="Filter by tag" />
           </SelectTrigger>
           <SelectContent>
@@ -44,9 +46,9 @@ export default function LinkFilter({ tags, selectedTag, onTagChange }: LinkFilte
         </Select>
       </div>
 
-      {/* Trial Stage Alert */}
-      <div className="flex justify-center">
-        <Alert className="w-full max-w-md border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-900/40 dark:text-red-300">
+      {/* Trial Stage Alert - Akan selalu di bawah Select karena struktur flex-col */}
+      <div className="w-full flex justify-center">
+        <Alert className="w-full max-w-md border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-900/40 dark:text-red-300 rounded-md">
           <AlertTriangleIcon className="h-4 w-4" />
           <AlertTitle>Website in Trial Stage</AlertTitle>
           <AlertDescription>
@@ -54,6 +56,7 @@ export default function LinkFilter({ tags, selectedTag, onTagChange }: LinkFilte
           </AlertDescription>
         </Alert>
       </div>
+      
     </div>
   )
 }
