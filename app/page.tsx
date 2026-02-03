@@ -1,7 +1,6 @@
 'use client'
 
 import React from "react"
-
 import { useState, useEffect } from 'react'
 import ProfileSection from '@/components/profile-section'
 import LinkButton from '@/components/link-button'
@@ -58,275 +57,98 @@ const authors: Author[] = [
     avatar: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg',
     email: 'nelsenchandra@gmail.com',
   },
-  {
-    id: '2',
-    username: 'Nerusen',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png',
-    email: 'nerusendesign@gmail.com',
-  },
 ]
 
-const footerAvatars = [
-  {
-    src: 'https://ik.imagekit.io/8sxh7zirl/56ba9b177b33f8a9f1114305baa2d3bb.jpg?updatedAt=1760922593332',
-    alt: '@Vaneko',
-    fallback: 'VN',
-  },
-  {
-    src: 'https://ik.imagekit.io/8sxh7zirl/910ab59abc5aed1805485ddc299a6a11.jpg?updatedAt=1760922572271',
-    alt: '@Zero',
-    fallback: 'ZR',
-  },
-  {
-    src: 'https://ik.imagekit.io/8sxh7zirl/c9309af26cdf4a49443dde98b742a666.jpg?updatedAt=1760965529709',
-    alt: '@nero',
-    fallback: 'NE',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=400&fit=crop',
-    alt: 'Developer',
-    fallback: 'DV',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-    alt: 'Designer',
-    fallback: 'DS',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
-    alt: 'Manager',
-    fallback: 'MG',
-  },
-]
-
-const links: LinkItem[] = [
+const allLinks: LinkItem[] = [
   {
     id: '1',
-    title: 'Portfolio Website',
-    url: 'https://nelsen.my.id',
-    tag: 'Portfolio',
-    icon: <Brush className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg',
-    showThumbnail: true,
-    thumbnailTag: 'Featured',
-    showThumbnailTag: true,
-    thumbnailTagBg: 'bg-red-600/50 backdrop-blur-sm border border-red-600 rounded-full',
-    thumbnailTagText: 'text-white font-bold',
+    title: 'Portofolio Personal',
+    url: 'https://nelsen.pro',
+    tag: 'Project',
+    icon: <Globe className="w-5 h-5" />,
     showNotification: true,
-    notificationTitle: 'Opening Portfolio',
-    notificationDescription: 'Check out my latest work and projects',
+    notificationTitle: "New",
+    notificationDescription: "Updated site"
   },
   {
     id: '2',
     title: 'GitHub Profile',
-    url: 'https://github.com/nerusen',
-    tag: 'Code',
-    icon: <Github className="w-5 h-5" />,
-    showNotification: true,
-    notificationTitle: 'Opening GitHub',
-    notificationDescription: 'Check out my repositories and contributions',
-  },
-  {
-    id: '3',
-    title: 'Instagram',
-    url: 'https://instagram.com/n31sen.st',
+    url: 'https://github.com/nelsenchandra',
     tag: 'Social',
-    icon: <Instagram className="w-5 h-5" />,
+    icon: <Github className="w-5 h-5" />,
   },
-  {
-    id: '4',
-    title: 'Email Me',
-    url: 'mailto:xynelsdesign@gmail.com',
-    tag: 'Contact',
-    icon: <Mail className="w-5 h-5" />,
-  },
-  {
-    id: '5',
-    title: 'Repository',
-    url: 'https://github.com/nerusen/nelsen.my.id',
-    tag: 'Repo',
-    icon: <FolderGit2 className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/nelsen-chandra-web.png',
-    showThumbnail: false,
-    thumbnailTag: 'Latest Post',
-    showThumbnailTag: false,
-    thumbnailTagBg: 'bg-purple-500/80',
-    thumbnailTagText: 'text-white',
-    showNotification: true,
-    notificationTitle: 'Visiting Repo',
-    notificationDescription: 'Check out our latest repository',
-  },
-  {
-    id: '6',
-    title: 'Project Preview',
-    url: 'https://nelsen.my.id/projects',
-    tag: 'Projects',
-    icon: <FolderOpen className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251214_115428.png?updatedAt=1767193208348',
-    showThumbnail: false,
-    showNotification: true,
-    notificationTitle: 'Visiting Projects',
-    notificationDescription: 'Check out our latest projects',
-  },
-  {
-    id: '7',
-    title: 'Personal Website',
-    url: 'https://nerusen.web.id',
-    tag: 'Web',
-    icon: <Globe className="w-5 h-5" />,
-    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251015_173931.png',
-    showThumbnail: false,
-    thumbnailTag: 'Live Project',
-    showThumbnailTag: true,
-    thumbnailTagBg: 'bg-green-500/80',
-    thumbnailTagText: 'text-white',
-    showNotification: true,
-    notificationTitle: 'Launching Website',
-    notificationDescription: 'Explore my personal projects and work',
-  },
-  {
-    id: '8',
-    title: 'Pricelist',
-    url: 'https://nelsen.my.id/price-list',
-    tag: 'Market',
-    icon: <Store className="w-5 h-5" />,
-  },
+  // Tambahkan link lainnya di sini sesuai data Anda sebelumnya
+]
+
+const footerAvatars = [
+  { id: '1', name: 'Nelsen', image: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg' },
+  { id: '2', name: 'Dev', image: 'https://i.pravatar.cc/150?u=2' },
 ]
 
 export default function Home() {
+  const [activeCategory, setActiveCategory] = useState('All')
   const [isLoading, setIsLoading] = useState(true)
-  const [showThemeTransition, setShowThemeTransition] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   useEffect(() => {
-    // Loading progress simulation
-    setProgress(20)
-    const timer1 = setTimeout(() => setProgress(50), 200)
-    const timer2 = setTimeout(() => setProgress(80), 400)
-    const timer3 = setTimeout(() => {
-      setProgress(100)
-      setIsLoading(false)
-    }, 800)
-
-    return () => {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
-      clearTimeout(timer3)
-    }
+    // Menunggu sedikit lebih lama untuk sinkronisasi dengan overlay
+    const timer = setTimeout(() => setIsLoading(false), 1200)
+    return () => clearTimeout(timer)
   }, [])
 
-  // Expose theme transition to global scope
-  useEffect(() => {
-    ;(window as any).__triggerThemeTransition = () => {
-      setShowThemeTransition(true)
-      setTimeout(() => setShowThemeTransition(false), 600)
-    }
-  }, [])
-
-  // Get unique tags for filtering
-  const uniqueTags = [...new Set(links.map(link => link.tag))]
-
-  // Filter links based on selected tag
-  const filteredLinks = selectedTag
-    ? links.filter(link => link.tag === selectedTag)
-    : links
+  const filteredLinks = activeCategory === 'All'
+    ? allLinks
+    : allLinks.filter(link => link.tag === activeCategory)
 
   return (
-    <main className="min-h-screen w-full bg-background">
-      {/* Loading Progress Bar */}
-      {isLoading && (
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <Progress value={progress} className="h-1 rounded-none" />
-        </div>
-      )}
+    <main className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      
+      {/* 3 TUMPUKAN WARNA TRANSISI (ANIMASI AWAL) */}
+      <div className="layer-red animate-overlay" style={{ animationDelay: '0ms' }}></div>
+      <div className="layer-black animate-overlay" style={{ animationDelay: '120ms' }}></div>
+      <div className="layer-white animate-overlay" style={{ animationDelay: '240ms' }}></div>
 
-      {/* Square Stack Theme Transition Overlay */}
-      {showThemeTransition && (
-        <div className="fixed inset-0 z-40 pointer-events-none">
-          {/* Green Square */}
-          <div className="layer-red animate-overlay-smooth" style={{ animationDelay: '0ms' }}></div>
-          {/* White Square */}
-          <div className="layer-black animate-overlay-smooth" style={{ animationDelay: '120ms' }}></div>
-          {/* Black Square */}
-          <div className="layer-white animate-overlay-smooth" style={{ animationDelay: '240ms' }}></div>
-          {/* Konten Utama: Delay 1s agar muncul saat layer putih mulai membuka layar */}
-      <div className="content-fade-in" style={{ animationDelay: '1s' }}>
+      {/* WRAPPER KONTEN UTAMA - Muncul setelah overlay lewat */}
+      <div className="content-smooth-in" style={{ animationDelay: '1s' }}>
         <div className="max-w-md mx-auto px-6 py-12 relative z-10">
-
-      {/* Authors Dropdown */}
-      {!isLoading && <AuthorsDropdown authors={authors} />}
-
-      <ThemeToggle />
-
-      {/* Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20">
-        <div className="w-full max-w-2xl">
-          <div className="space-y-8">
-            {/* Profile Section with skeleton animation */}
-            <div className={isLoading ? 'animate-pulse' : 'animate-fade-in-up'}>
-              <ProfileSection />
-          
-          {/* List Links dengan Staggered Entrance */}
-          <div className="space-y-3 mt-8">
-            {isLoading ? (
-              // Skeleton loading...
-            ) : (
-              filteredLinks.map((link, index) => (
-                <div 
-                  key={link.id} 
-                  className="content-fade-in"
-                  style={{ 
-                    // Muncul berurutan setelah header selesai animasi
-                    animationDelay: `${1.1 + (index * 0.08)}s` 
-                  }}
-                >
-                  <LinkButton {...link} />
-                </div>
-              ))
-            }
+          <div className="flex justify-between items-center mb-8">
+            <AuthorsDropdown authors={authors} />
+            <ThemeToggle />
           </div>
-            {/* Filter Section */}
-            {!isLoading && (
-              <LinkFilter 
-                tags={uniqueTags} 
-                selectedTag={selectedTag} 
-                onTagChange={setSelectedTag}
-              />
-            )}
 
-            {/* Links Grid */}
+          <div className="space-y-8">
+            <ProfileSection />
+            
+            <LinkFilter 
+              activeCategory={activeCategory} 
+              onCategoryChange={setActiveCategory} 
+            />
+
+            {/* Links Grid dengan Staggered Delay */}
             <div className="space-y-3">
               {isLoading ? (
-                // Skeleton loading
                 <>
                   {[...Array(4)].map((_, i) => (
                     <div
                       key={i}
                       className="h-24 rounded-lg bg-card border border-border animate-shimmer"
-                      style={{ animationDelay: `${i * 100}ms` }}
                     />
                   ))}
                 </>
               ) : (
                 filteredLinks.length > 0 ? (
-    filteredLinks.map((link, index) => (
-      <div 
-        key={link.id} 
-        // Tambahkan kelas baru 'animate-smooth-stagger'
-        // Gunakan 'opacity-0' agar elemen tidak "berkedip" sebelum animasi mulai
-        className="animate-smooth-stagger opacity-0" 
-        style={{ 
-          /* Jeda 80ms - 100ms adalah angka ideal untuk efek mengalir */
-          animationDelay: `${index * 80}ms`,
-          /* Optional: Menjaga performa render */
-          willChange: 'transform, opacity' 
-        }}
-      >
-        <LinkButton {...link} />
-      </div>
-    ))
-  ) : (
+                  filteredLinks.map((link, index) => (
+                    <div 
+                      key={link.id} 
+                      className="content-smooth-in"
+                      style={{ 
+                        // Delay bertahap: Start dari 1.1s + 80ms per item
+                        animationDelay: `${1.1 + (index * 0.08)}s` 
+                      }}
+                    >
+                      <LinkButton {...link} />
+                    </div>
+                  ))
+                ) : (
                   <div className="text-center py-8 text-muted-foreground">
                     <p className="text-sm">No links found for this category</p>
                   </div>
@@ -334,22 +156,18 @@ export default function Home() {
               )}
             </div>
 
-            {/* FAQ Section */}
-            {!isLoading && (
-              <FAQSection />
-            )}
+            {!isLoading && <FAQSection />}
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 text-center py-6 mt-8">
-        {/* Avatar Section */}
-        <AvatarSection avatars={footerAvatars} />
-        
-        {/* Copyright */}
-        <p className="text-xs text-muted-foreground">©Copyright by Nelsen Chandra 2026, All Rights Reserved.</p>
-      </footer>
+        {/* Footer */}
+        <footer className="relative z-10 text-center py-6 mt-8">
+          <AvatarSection avatars={footerAvatars} />
+          <p className="text-xs text-muted-foreground">
+            ©Copyright by Nelsen Chandra 2026, All Rights Reserved.
+          </p>
+        </footer>
+      </div>
     </main>
   )
 }
