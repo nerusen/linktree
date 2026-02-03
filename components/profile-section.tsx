@@ -22,8 +22,8 @@ export default function ProfileSection({
   return (
     <div className="flex flex-col items-center gap-6 animate-fade-in-up">
       {/* Profile Image with Google Border */}
-      <div className="google-profile-border">
-        <div className="relative w-24 h-24 rounded-full overflow-hidden z-0">
+      <div className="google-profile-border relative">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden" style={{ zIndex: 10 }}>
           {imageLoading && !imageError && (
             <div className="absolute inset-0 bg-muted rounded-full animate-shimmer" />
           )}
