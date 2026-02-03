@@ -49,7 +49,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
         </ThemeProvider>
-        <Toaster position="top-center" richColors />
+        <Toaster position="top-center" richColors theme="system" />
         <Analytics />
       </body>
     </html>
