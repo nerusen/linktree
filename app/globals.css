@@ -141,17 +141,22 @@
   }
 
   @keyframes fadeInUpBlur {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.95);
     filter: blur(10px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
+  /* Bagian 50% adalah saat elemen mulai terlihat jelas namun bergerak lambat */
+  50% {
+    opacity: 0.8;
+    filter: blur(2px);
   }
-}
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    }
+  }
 
   @keyframes fadeInScale {
     from {
@@ -288,6 +293,12 @@
 
   .animate-theme-transition {
     animation: themeTransition 0.3s ease-out;
+  }
+
+  .animate-smooth-stagger {
+  /* Durasi 0.8s agar terasa sedikit lebih lama dan premium */
+  /* cubic-bezier(0.65, 0, 0.35, 1) memberikan efek 'slow' di tengah */
+  animation: fadeInUpBlur 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
   }
 
   .google-profile-border {
