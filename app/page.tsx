@@ -207,6 +207,24 @@ export default function Home() {
   const [showThemeTransition, setShowThemeTransition] = useState(false)
   const [progress, setProgress] = useState(0)
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const { theme, setTheme } = useTheme(); // Pastikan kamu menggunakan hook theme kamu
+
+  const handleThemeToggle = () => {
+  if (isTransitioning) return; // Cegah spam klik saat animasi jalan
+
+  setIsTransitioning(true);
+
+  // 1. Delay sebelum ganti warna background asli (agar tertutup overlay dulu)
+  setTimeout(() => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  }, 850); // Ganti di tengah-tengah animasi (saat layar tertutup penuh)
+
+  // 2. Durasi total sampai overlay menghilang (layar bersih kembali)
+  setTimeout(() => {
+    setIsTransitioning(false);
+  }, 2000); 
+};
 
   useEffect(() => {
     // Loading progress simulation
