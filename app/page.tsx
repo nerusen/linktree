@@ -11,7 +11,9 @@ import AuthorsDropdown from '@/components/authors-dropdown'
 import LinkFilter from '@/components/link-filter'
 import AvatarSection from '@/components/avatar-section'
 import { AnimatedBeamDemo } from '@/components/animated-beam-section'
+import { AnimatedGridPattern } from '@/components/magicui/animated-grid-pattern'
 import { Progress } from '@/components/ui/progress'
+import { cn } from '@/lib/utils'
 import {
   Github,
   Linkedin,
@@ -230,7 +232,22 @@ export default function Home() {
     : links
 
   return (
-    <main className="min-h-screen w-full bg-background">
+    <main className="min-h-screen w-full bg-background relative overflow-hidden">
+      {/* Animated Grid Pattern Background */}
+      <div className="absolute inset-0 -z-10">
+        <AnimatedGridPattern
+          numSquares={30}
+          maxOpacity={0.1}
+          duration={3}
+          repeatDelay={1}
+          className={cn(
+            "text-foreground/20",
+            "mask-[radial-gradient(500px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%]"
+          )}
+        />
+      </div>
+
       {/* Loading Progress Bar */}
       {isLoading && (
         <div className="fixed top-0 left-0 right-0 z-50">
