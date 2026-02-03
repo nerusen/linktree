@@ -318,16 +318,23 @@ export default function Home() {
                 </>
               ) : (
                 filteredLinks.length > 0 ? (
-    filteredLinks.map((link, index) => ( // Tambahkan index di sini
+    filteredLinks.map((link, index) => (
       <div 
         key={link.id} 
-        className="animate-fade-in-up opacity-0" // opacity-0 agar tidak muncul tiba-tiba sebelum animasi
-        style={{ animationDelay: `${index * 100}ms` }} // Jeda 100ms antar link
+        // Tambahkan kelas baru 'animate-smooth-stagger'
+        // Gunakan 'opacity-0' agar elemen tidak "berkedip" sebelum animasi mulai
+        className="animate-smooth-stagger opacity-0" 
+        style={{ 
+          /* Jeda 80ms - 100ms adalah angka ideal untuk efek mengalir */
+          animationDelay: `${index * 80}ms`,
+          /* Optional: Menjaga performa render */
+          willChange: 'transform, opacity' 
+        }}
       >
         <LinkButton {...link} />
       </div>
     ))
-                ) : (
+  ) : (
                   <div className="text-center py-8 text-muted-foreground">
                     <p className="text-sm">No links found for this category</p>
                   </div>
