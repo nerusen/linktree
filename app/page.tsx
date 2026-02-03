@@ -12,6 +12,9 @@ import LinkFilter from '@/components/link-filter'
 import AvatarSection from '@/components/avatar-section'
 import { AnimatedBeamDemo } from '@/components/animated-beam-section'
 import { AnimatedGridPattern } from '@/components/magicui/animated-grid-pattern'
+import { Marquee3D } from '@/components/marquee-3d-section'
+import { Safari } from '@/components/magicui/safari'
+import { ClientTweetCard } from '@/components/magicui/client-tweet-card'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 import {
@@ -351,6 +354,32 @@ export default function Home() {
                 )
               )}
             </div>
+
+            {/* 3D Marquee Section */}
+            {!isLoading && (
+              <div className="mt-12">
+                <Marquee3D />
+              </div>
+            )}
+
+            {/* Safari Browser Mockup */}
+            {!isLoading && (
+              <div className="mt-12 flex justify-center">
+                <div className="w-full max-w-2xl">
+                  <Safari
+                    url="nelsendesign.com"
+                    imageSrc="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=1200&h=750&fit=crop"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Tweet Card Section */}
+            {!isLoading && (
+              <div className="mt-12 flex justify-center">
+                <ClientTweetCard />
+              </div>
+            )}
 
             {/* FAQ Section */}
             {!isLoading && (
