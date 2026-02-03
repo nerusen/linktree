@@ -10,8 +10,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Linktree - Connect All Your Links',
-  description: 'A simple and elegant linktree concept to connect all your important links in one place.',
+  title: 'Linktree - Nelsen Chandra',
+  description: 'Lets interact with Nelsen Chandra various platform connections.',
   generator: 'v0.app',
   viewport: {
     width: 'device-width',
