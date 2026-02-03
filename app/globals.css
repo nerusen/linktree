@@ -389,7 +389,6 @@
     --border: oklch(0.25 0 0);
     --text: oklch(0.95 0 0);
   }
-}
 
   [data-sonner-toast] {
     @apply dark:bg-black dark:text-white dark:border-neutral-800;
