@@ -33,6 +33,7 @@ interface LinkItem {
   url: string
   tag: string
   icon: React.ReactNode
+  isVisible: boolean
   thumbnail?: string
   showThumbnail?: boolean
   thumbnailTag?: string
@@ -106,6 +107,7 @@ const links: LinkItem[] = [
     url: 'https://nelsen.my.id',
     tag: 'Portfolio',
     icon: <Brush className="w-5 h-5" />,
+    isVisible: false,
     thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg',
     showThumbnail: true,
     thumbnailTag: 'Featured',
@@ -122,6 +124,7 @@ const links: LinkItem[] = [
     url: 'https://github.com/nerusen',
     tag: 'Code',
     icon: <Github className="w-5 h-5" />,
+    isVisible: false,
     showNotification: true,
     notificationTitle: 'Opening GitHub',
     notificationDescription: 'Check out my repositories and contributions',
@@ -132,6 +135,7 @@ const links: LinkItem[] = [
     url: 'https://instagram.com/n31sen.st',
     tag: 'Social',
     icon: <Instagram className="w-5 h-5" />,
+    isVisible: false,
   },
   {
     id: '4',
@@ -139,6 +143,7 @@ const links: LinkItem[] = [
     url: 'mailto:xynelsdesign@gmail.com',
     tag: 'Contact',
     icon: <Mail className="w-5 h-5" />,
+    isVisible: false,
   },
   {
     id: '5',
@@ -146,6 +151,7 @@ const links: LinkItem[] = [
     url: 'https://github.com/nerusen/nelsen.my.id',
     tag: 'Repo',
     icon: <FolderGit2 className="w-5 h-5" />,
+    isVisible: false,
     thumbnail: 'https://ik.imagekit.io/8sxh7zirl/nelsen-chandra-web.png',
     showThumbnail: false,
     thumbnailTag: 'Latest Post',
@@ -162,6 +168,7 @@ const links: LinkItem[] = [
     url: 'https://nelsen.my.id/projects',
     tag: 'Projects',
     icon: <FolderOpen className="w-5 h-5" />,
+    isVisible: false,
     thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251214_115428.png?updatedAt=1767193208348',
     showThumbnail: false,
     showNotification: true,
@@ -174,6 +181,7 @@ const links: LinkItem[] = [
     url: 'https://nerusen.web.id',
     tag: 'Web',
     icon: <Globe className="w-5 h-5" />,
+    isVisible: false,
     thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20251015_173931.png',
     showThumbnail: false,
     thumbnailTag: 'Live Project',
@@ -190,6 +198,7 @@ const links: LinkItem[] = [
     url: 'https://nelsen.my.id/price-list',
     tag: 'Market',
     icon: <Store className="w-5 h-5" />,
+    isVisible: false,
   },
 ]
 
@@ -228,9 +237,12 @@ export default function Home() {
   const uniqueTags = [...new Set(links.map(link => link.tag))]
 
   // Filter links based on selected tag
-  const filteredLinks = selectedTag
-    ? links.filter(link => link.tag === selectedTag)
-    : links
+  const filteredLinks = links.filter(link => {
+  const matchesTag = selectedTag ? link.tag === selectedTag : true;
+  const isShown = link.isVisible === true; // Hanya ambil yang true
+  
+  return matchesTag && isShown;
+  });
 
   return (
     <main className="min-h-screen w-full bg-background">
