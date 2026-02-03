@@ -128,10 +128,6 @@
   .grid-background {
     @apply bg-background;
   }
-  .animate-gradient-flow {
-    background-size: 200% 200%;
-    animation: gradientFlow 6s ease infinite;
-  }
 
   @keyframes fadeInUp {
     from {
@@ -175,26 +171,67 @@
     }
   }
 
-  @keyframes themeSlideUp {
-    0% { transform: translateY(100%); }
-    45%, 55% { transform: translateY(0%); } 
-    100% { transform: translateY(-100%); }
+  @keyframes shapeReveal {
+    0% {
+      clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+    }
+    50% {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    100% {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
   }
 
-  .animate-theme-slide {
-    animation: themeSlideUp 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  @keyframes circleReveal {
+    0% {
+      clip-path: circle(0% at 50% 50%);
+    }
+    100% {
+      clip-path: circle(100% at 50% 50%);
+    }
   }
 
-  @keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  @keyframes squareSlideUp1 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
-  .fade-in-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s ease forwards;
+  @keyframes squareSlideUp2 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes squareSlideUp3 {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes themeTransition {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .animate-square-1 {
@@ -209,6 +246,18 @@
     animation: squareSlideUp3 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
   }
 
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-fade-in-scale {
+    animation: fadeInScale 0.5s ease-out;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInFromLeft 0.5s ease-out;
+  }
+
   .animate-shimmer {
     animation: shimmer 2s infinite;
     background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
@@ -218,6 +267,10 @@
   .dark .animate-shimmer {
     background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%);
     background-size: 1000px 100%;
+  }
+
+  .animate-theme-transition {
+    animation: themeTransition 0.3s ease-out;
   }
 
   .google-profile-border {
@@ -250,10 +303,25 @@
     background: #121212;
   }
 
+  /* Sonner Toast Dark Theme */
   .dark [data-sonner-toaster] {
     --background: oklch(0.11 0 0);
     --border: oklch(0.25 0 0);
     --text: oklch(0.95 0 0);
   }
+
+  [data-sonner-toast] {
+    @apply dark:bg-black dark:text-white dark:border-neutral-800;
   }
-      
+
+  [data-sonner-toast] button {
+    @apply md:px-4 md:py-2 px-3 py-2 text-sm md:text-base;
+  }
+
+  /* Mobile responsive sonner action button */
+  @media (max-width: 640px) {
+    [data-sonner-toast] button {
+      @apply px-4 py-3 text-base;
+    }
+  }
+}
