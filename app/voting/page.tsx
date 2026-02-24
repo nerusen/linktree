@@ -5,33 +5,8 @@ import { createClient } from '@/lib/supabase/client'
 import VotingChart from '@/components/voting-chart'
 import ProductCard from '@/components/product-card'
 import ProfileSection from '@/components/profile-section'
-import AuthorsDropdown from '@/components/authors-dropdown'
 import { VotingDbInit } from '@/components/voting-db-init'
 import { getClientIdentifier } from '@/lib/vote-utils'
-import { AlertCircle } from 'lucide-react'
-import { toast } from 'sonner'
-
-interface Author {
-  id: string
-  username: string
-  avatar: string
-  email: string
-}
-
-const authors: Author[] = [
-  {
-    id: '1',
-    username: 'Nelsen Chandra',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg',
-    email: 'nelsenchandra@gmail.com',
-  },
-  {
-    id: '2',
-    username: 'Nerusen',
-    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png',
-    email: 'nerusendesign@gmail.com',
-  },
-]
 
 interface Product {
   id: string
@@ -44,7 +19,7 @@ interface Product {
 export default function VotingPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const [hasVoted, setHasVoted] = useState<Record<string, boolean>>({})
+  const [currentVote, setCurrentVote] = useState<string | null>(null)
   const [clientId, setClientId] = useState<string>('')
   const supabase = createClient()
 
@@ -84,17 +59,16 @@ export default function VotingPage() {
 
       setProducts(productsWithVotes)
       
-      // Check which products the user has already voted for
-      const votedProducts: Record<string, boolean> = {}
-      const { data: userVotes } = await supabase
+      // Check which product the user has currently voted for
+      const { data: userVote } = await supabase
         .from('product_votes')
         .select('product_id')
         .eq('voter_ip_hash', clientId)
+        .single()
 
-      userVotes?.forEach(vote => {
-        votedProducts[vote.product_id] = true
-      })
-      setHasVoted(votedProducts)
+      if (userVote?.product_id) {
+        setCurrentVote(userVote.product_id)
+      }
       
       setLoading(false)
     }
@@ -124,37 +98,79 @@ export default function VotingPage() {
   }, [clientId])
 
   const handleVote = async (productId: string) => {
-    if (!clientId || hasVoted[productId]) return
+    if (!clientId) return
 
-    const { error } = await supabase
-      .from('product_votes')
-      .insert([
-        {
-          product_id: productId,
-          voter_ip_hash: clientId,
-        },
-      ])
+    try {
+      if (currentVote === productId) {
+        // Voting same product again, just return
+        return
+      }
 
-    if (error) {
-      console.error('Error voting:', error)
-      return
+      if (currentVote) {
+        // User already has a vote, need to update it
+        const { error: updateError } = await supabase
+          .from('product_votes')
+          .update({ product_id: productId })
+          .eq('voter_ip_hash', clientId)
+
+        if (updateError) {
+          console.error('Error updating vote:', updateError)
+          return
+        }
+
+        // Update local state - decrease old product, increase new product
+        setProducts(prev =>
+          prev.map(p => {
+            if (p.id === currentVote && p.vote_count > 0) {
+              return { ...p, vote_count: p.vote_count - 1 }
+            }
+            if (p.id === productId) {
+              return { ...p, vote_count: p.vote_count + 1 }
+            }
+            return p
+          })
+        )
+      } else {
+        // First time voting
+        const { error: insertError } = await supabase
+          .from('product_votes')
+          .insert([
+            {
+              product_id: productId,
+              voter_ip_hash: clientId,
+            },
+          ])
+
+        if (insertError) {
+          console.error('Error voting:', insertError)
+          return
+        }
+
+        // Update local state - increase product count
+        setProducts(prev =>
+          prev.map(p =>
+            p.id === productId ? { ...p, vote_count: p.vote_count + 1 } : p
+          )
+        )
+      }
+
+      setCurrentVote(productId)
+    } catch (error) {
+      console.error('Vote error:', error)
     }
-
-    // Update local state
-    setHasVoted(prev => ({ ...prev, [productId]: true }))
-    setProducts(prev =>
-      prev.map(p =>
-        p.id === productId ? { ...p, vote_count: p.vote_count + 1 } : p
-      )
-    )
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-background/80 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-foreground/60">Loading products...</p>
+          <div className="inline-flex flex-col items-center gap-4">
+            <div className="relative w-12 h-12">
+              <div className="absolute inset-0 rounded-full border-2 border-accent/20"></div>
+              <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent animate-spin"></div>
+            </div>
+            <p className="text-foreground/60 text-sm">Farewell Design</p>
+          </div>
         </div>
       </div>
     )
@@ -187,32 +203,7 @@ export default function VotingPage() {
           />
         </div>
 
-        {/* Top Buttons */}
-        <div className="flex justify-center gap-4 mb-10 sm:mb-14">
-          <AuthorsDropdown authors={authors} />
-          <button
-            onClick={() => {
-              toast.error('Sementara fitur ubah tema sedang maintenance', {
-                icon: <AlertCircle className="w-5 h-5" />,
-                className: 'bg-destructive/90 text-destructive-foreground border border-destructive',
-              })
-            }}
-            disabled
-            className="px-4 sm:px-6 py-2 rounded-lg border border-border bg-card hover:bg-secondary/50 text-foreground/60 font-medium text-sm opacity-60 cursor-not-allowed transition-all"
-          >
-            🌙 Theme
-          </button>
-        </div>
 
-        {/* Header */}
-        <div className="text-center mb-10 sm:mb-14">
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 text-balance">
-            Vote for Your Favorite Design
-          </h1>
-          <p className="text-foreground/60 text-sm sm:text-base">
-            Choose the design that resonates with you the most
-          </p>
-        </div>
 
         {/* Chart Section */}
         <div className="bg-card rounded-xl border border-border p-4 sm:p-6 mb-10 sm:mb-14">
@@ -234,7 +225,7 @@ export default function VotingPage() {
               >
                 <ProductCard
                   product={product}
-                  hasVoted={hasVoted[product.id] || false}
+                  hasVoted={currentVote === product.id}
                   onVote={() => handleVote(product.id)}
                   isTopVoted={maxVotes > 0 && product.vote_count === maxVotes}
                 />

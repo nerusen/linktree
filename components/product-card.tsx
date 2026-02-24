@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { Badge } from '@/components/ui/badge'
 
 interface Product {
   id: string
@@ -55,8 +56,10 @@ export default function ProductCard({
         
         {/* Terpilih Badge */}
         {isTopVoted && (
-          <div className="absolute top-3 right-3 z-10 bg-accent text-accent-foreground px-3 py-1.5 rounded-full text-xs font-bold shadow-lg animate-pulse">
-            Terpilih
+          <div className="absolute top-3 right-3 z-10">
+            <Badge className="bg-accent/90 text-accent-foreground text-xs font-bold backdrop-blur-sm shadow-lg">
+              Terpilih
+            </Badge>
           </div>
         )}
       </div>
