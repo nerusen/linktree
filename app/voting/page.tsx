@@ -11,6 +11,28 @@ import { getClientIdentifier } from '@/lib/vote-utils'
 import { AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
+interface Author {
+  id: string
+  username: string
+  avatar: string
+  email: string
+}
+
+const authors: Author[] = [
+  {
+    id: '1',
+    username: 'Nelsen Chandra',
+    avatar: 'https://ik.imagekit.io/8sxh7zirl/20251111_132031.jpg',
+    email: 'nelsenchandra@gmail.com',
+  },
+  {
+    id: '2',
+    username: 'Nerusen',
+    avatar: 'https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260203172950.png',
+    email: 'nerusendesign@gmail.com',
+  },
+]
+
 interface Product {
   id: string
   title: string
@@ -167,7 +189,7 @@ export default function VotingPage() {
 
         {/* Top Buttons */}
         <div className="flex justify-center gap-4 mb-10 sm:mb-14">
-          <AuthorsDropdown />
+          <AuthorsDropdown authors={authors} />
           <button
             onClick={() => {
               toast.error('Sementara fitur ubah tema sedang maintenance', {
