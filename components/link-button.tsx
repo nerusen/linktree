@@ -4,6 +4,7 @@ import React from "react"
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ExternalLink } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
@@ -41,11 +42,15 @@ export default function LinkButton({
   notificationTitle,
   notificationDescription,
 }: LinkButtonProps) {
+  const router = useRouter()
   const [thumbnailLoading, setThumbnailLoading] = useState(true)
   const [thumbnailError, setThumbnailError] = useState(false)
 
   const handleClick = () => {
-    if (showNotification) {
+    // Internal routes (like /voting) navigate without notification
+    if (url?.startsWith('/')) {
+      router.push(url)
+    } else if (showNotification) {
       toast(notificationTitle || `Opening ${title}`, {
         description: notificationDescription || `Redirecting to ${title}...`,
         action: {

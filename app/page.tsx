@@ -3,6 +3,7 @@
 import React from "react"
 
 import { useState, useEffect } from 'react'
+import { useTheme } from 'next-themes'
 import ProfileSection from '@/components/profile-section'
 import LinkButton from '@/components/link-button'
 import ThemeToggle from '@/components/theme-toggle'
@@ -25,6 +26,7 @@ import {
   FileText,
   Code,
   Globe,
+  Palette,
 } from 'lucide-react'
 
 interface LinkItem {
@@ -101,6 +103,21 @@ const footerAvatars = [
 ]
 
 const links: LinkItem[] = [
+  {
+    id: '0',
+    title: 'Farewell Design',
+    url: '/voting',
+    tag: 'Voting',
+    icon: <Palette className="w-5 h-5" />,
+    isVisible: true,
+    thumbnail: 'https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg',
+    showThumbnail: false,
+    thumbnailTag: 'Vote Now',
+    showThumbnailTag: true,
+    thumbnailTagBg: 'bg-purple-600/50 backdrop-blur-sm border border-purple-600 rounded-full',
+    thumbnailTagText: 'text-white font-bold',
+    showNotification: false,
+  },
   {
     id: '1',
     title: 'Portfolio Website',
