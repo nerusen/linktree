@@ -30,6 +30,7 @@ export default function VotingPage() {
   useEffect(() => {
     if (!clientId) return
 
+    const fetchProducts = async () => {
       // Fetch products and their vote counts
       const { data: productsData, error: productsError } = await supabase
         .from('farewell_products')
@@ -134,41 +135,55 @@ export default function VotingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-background to-background/80">
+    <main className="min-h-screen bg-background">
       <VotingDbInit />
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 py-8 sm:py-12 max-w-6xl">
+        {/* Back Button */}
+        <div className="mb-8">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg hover:bg-secondary/50 text-foreground/60 hover:text-foreground transition-all duration-200 font-medium text-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+          </a>
+        </div>
+
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Farewell Design</h1>
-          <p className="text-foreground/60 text-lg">Vote for your favorite product design</p>
+        <div className="text-center mb-10 sm:mb-14">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2 text-balance">
+            Farewell Design
+          </h1>
+          <p className="text-foreground/60 text-base sm:text-lg">
+            Vote for your favorite product design
+          </p>
         </div>
 
         {/* Chart Section */}
-        <div className="bg-card rounded-2xl p-6 mb-12 shadow-lg border border-border">
-          <h2 className="text-2xl font-semibold text-foreground mb-6">Vote Distribution</h2>
+        <div className="bg-card rounded-xl border border-border p-4 sm:p-6 mb-10 sm:mb-14">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">
+            Vote Distribution
+          </h2>
           <VotingChart products={products} />
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map(product => (
-            <ProductCard
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {products.map((product, index) => (
+            <div 
               key={product.id}
-              product={product}
-              hasVoted={hasVoted[product.id] || false}
-              onVote={() => handleVote(product.id)}
-            />
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <ProductCard
+                product={product}
+                hasVoted={hasVoted[product.id] || false}
+                onVote={() => handleVote(product.id)}
+              />
+            </div>
           ))}
-        </div>
-
-        {/* Back Link */}
-        <div className="mt-12 text-center">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors font-medium"
-          >
-            ← Back to Home
-          </a>
         </div>
       </div>
     </main>
