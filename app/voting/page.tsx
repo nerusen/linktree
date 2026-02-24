@@ -4,8 +4,12 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import VotingChart from '@/components/voting-chart'
 import ProductCard from '@/components/product-card'
+import ProfileSection from '@/components/profile-section'
+import AuthorsDropdown from '@/components/authors-dropdown'
 import { VotingDbInit } from '@/components/voting-db-init'
 import { getClientIdentifier } from '@/lib/vote-utils'
+import { AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface Product {
   id: string
@@ -46,12 +50,12 @@ export default function VotingPage() {
       // Fetch vote counts for each product
       const productsWithVotes = await Promise.all(
         productsData.map(async (product) => {
-          const { data: voteData } = await supabase
+          const { count } = await supabase
             .from('product_votes')
-            .select('id', { count: 'exact', head: true })
+            .select('*', { count: 'exact', head: true })
             .eq('product_id', product.id)
 
-          const voteCount = voteData?.length || 0
+          const voteCount = count || 0
           return { ...product, vote_count: voteCount }
         })
       )
@@ -151,13 +155,40 @@ export default function VotingPage() {
           </a>
         </div>
 
+        {/* Profile Section */}
+        <div className="mb-12 sm:mb-16">
+          <ProfileSection
+            profileImage="https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg"
+            name="Farewell Design"
+            subtitle="Product Voting Poll"
+            bio="Vote for your favorite design and help us choose the best product direction"
+          />
+        </div>
+
+        {/* Top Buttons */}
+        <div className="flex justify-center gap-4 mb-10 sm:mb-14">
+          <AuthorsDropdown />
+          <button
+            onClick={() => {
+              toast.error('Sementara fitur ubah tema sedang maintenance', {
+                icon: <AlertCircle className="w-5 h-5" />,
+                className: 'bg-destructive/90 text-destructive-foreground border border-destructive',
+              })
+            }}
+            disabled
+            className="px-4 sm:px-6 py-2 rounded-lg border border-border bg-card hover:bg-secondary/50 text-foreground/60 font-medium text-sm opacity-60 cursor-not-allowed transition-all"
+          >
+            🌙 Theme
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-10 sm:mb-14">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2 text-balance">
-            Farewell Design
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 text-balance">
+            Vote for Your Favorite Design
           </h1>
-          <p className="text-foreground/60 text-base sm:text-lg">
-            Vote for your favorite product design
+          <p className="text-foreground/60 text-sm sm:text-base">
+            Choose the design that resonates with you the most
           </p>
         </div>
 
@@ -171,19 +202,23 @@ export default function VotingPage() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((product, index) => (
-            <div 
-              key={product.id}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <ProductCard
-                product={product}
-                hasVoted={hasVoted[product.id] || false}
-                onVote={() => handleVote(product.id)}
-              />
-            </div>
-          ))}
+          {(() => {
+            const maxVotes = Math.max(...products.map(p => p.vote_count), 0)
+            return products.map((product, index) => (
+              <div 
+                key={product.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <ProductCard
+                  product={product}
+                  hasVoted={hasVoted[product.id] || false}
+                  onVote={() => handleVote(product.id)}
+                  isTopVoted={maxVotes > 0 && product.vote_count === maxVotes}
+                />
+              </div>
+            ))
+          })()}
         </div>
       </div>
     </main>

@@ -15,12 +15,14 @@ interface ProductCardProps {
   product: Product
   hasVoted: boolean
   onVote: () => void
+  isTopVoted?: boolean
 }
 
 export default function ProductCard({
   product,
   hasVoted,
   onVote,
+  isTopVoted = false,
 }: ProductCardProps) {
   const [isVoting, setIsVoting] = useState(false)
 
@@ -50,6 +52,13 @@ export default function ProductCard({
         />
         {/* Gradient overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Terpilih Badge */}
+        {isTopVoted && (
+          <div className="absolute top-3 right-3 z-10 bg-accent text-accent-foreground px-3 py-1.5 rounded-full text-xs font-bold shadow-lg animate-pulse">
+            Terpilih
+          </div>
+        )}
       </div>
 
       {/* Product Info */}

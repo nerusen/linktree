@@ -3,7 +3,6 @@
 import React from "react"
 
 import { useState, useEffect } from 'react'
-import { useTheme } from 'next-themes'
 import ProfileSection from '@/components/profile-section'
 import LinkButton from '@/components/link-button'
 import ThemeToggle from '@/components/theme-toggle'
@@ -221,27 +220,8 @@ const links: LinkItem[] = [
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
-  const [showThemeTransition, setShowThemeTransition] = useState(false)
   const [progress, setProgress] = useState(0)
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const { theme, setTheme } = useTheme(); // Pastikan kamu menggunakan hook theme kamu
-
-  const handleThemeToggle = () => {
-  if (isTransitioning) return; // Cegah spam klik saat animasi jalan
-
-  setIsTransitioning(true);
-
-  // 1. Delay sebelum ganti warna background asli (agar tertutup overlay dulu)
-  setTimeout(() => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  }, 850); // Ganti di tengah-tengah animasi (saat layar tertutup penuh)
-
-  // 2. Durasi total sampai overlay menghilang (layar bersih kembali)
-  setTimeout(() => {
-    setIsTransitioning(false);
-  }, 2000); 
-};
 
   useEffect(() => {
     // Loading progress simulation
@@ -257,14 +237,6 @@ export default function Home() {
       clearTimeout(timer1)
       clearTimeout(timer2)
       clearTimeout(timer3)
-    }
-  }, [])
-
-  // Expose theme transition to global scope
-  useEffect(() => {
-    ;(window as any).__triggerThemeTransition = () => {
-      setShowThemeTransition(true)
-      setTimeout(() => setShowThemeTransition(false), 600)
     }
   }, [])
 
@@ -288,27 +260,6 @@ export default function Home() {
       </div>
     )}
 
-    {/* STEP 2: Letakkan Transition Overlay di sini */}
-    {showThemeTransition && (
-      <div className="fixed inset-0 z-[9999] pointer-events-none">
-        {/* Layer 1: Paling Bawah (Contoh: Merah) */}
-        <div
-          className="absolute inset-0 bg-red-600 animate-theme-slide"
-          style={{ animationDelay: '0ms' }}
-        />
-        {/* Layer 2: Tengah (Warna Kontras) */}
-        <div
-          className="absolute inset-0 bg-blue-600 animate-theme-slide"
-          style={{ animationDelay: '100ms' }}
-        />
-        {/* Layer 3: Paling Atas (Warna Background Tujuan) */}
-        {/* Gunakan variabel CSS --background agar otomatis menyesuaikan dark/light */}
-        <div
-          className="absolute inset-0 bg-[var(--background)] animate-theme-slide"
-          style={{ animationDelay: '200ms' }}
-        />
-      </div>
-    )}
       {/* Authors Dropdown */}
       {!isLoading && <AuthorsDropdown authors={authors} />}
 
