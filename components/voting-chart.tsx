@@ -1,16 +1,5 @@
 'use client'
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts'
 import { useEffect, useState } from 'react'
 
 interface Product {
@@ -30,75 +19,47 @@ export default function VotingChart({ products }: VotingChartProps) {
     setIsMounted(true)
   }, [])
 
-  const chartData = products.map(product => ({
-    name: product.title.length > 15 ? product.title.substring(0, 15) + '...' : product.title,
-    votes: product.vote_count,
-    fullName: product.title,
-  }))
-
   if (!isMounted) {
     return <div className="w-full h-80 bg-secondary/50 rounded-lg animate-pulse" />
   }
 
-  // Get theme colors from CSS variables
-  const getColor = (cssVar: string) => {
-    if (typeof window === 'undefined') return '#000'
-    return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim()
-  }
+  const maxVotes = Math.max(...products.map(p => p.vote_count), 1)
 
   return (
-    <div className="w-full">
-      <ResponsiveContainer width="100%" height={350} minWidth={300}>
-        <BarChart 
-          data={chartData}
-          margin={{ top: 20, right: 30, left: 0, bottom: 80 }}
-        >
-          <CartesianGrid 
-            strokeDasharray="3 3" 
-            stroke="hsl(var(--border))" 
-            vertical={false}
-          />
-          <XAxis
-            dataKey="name"
-            angle={-45}
-            textAnchor="end"
-            height={100}
-            tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }}
-          />
-          <YAxis 
-            tick={{ fontSize: 11, fill: 'hsl(var(--foreground))' }}
-            allowDecimals={false}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: 'hsl(var(--card))',
-              border: '1px solid hsl(var(--border))',
-              borderRadius: '8px',
-              padding: '8px 12px',
-            }}
-            labelStyle={{ color: 'hsl(var(--foreground))' }}
-            formatter={(value) => [`${value} votes`, 'Total']}
-            labelFormatter={(label) => {
-              const product = chartData.find((d) => d.name === label)
-              return product?.fullName || label
-            }}
-            cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }}
-          />
-          <Bar
-            dataKey="votes"
-            fill="hsl(var(--accent))"
-            radius={[8, 8, 0, 0]}
-            animationDuration={500}
-          >
-            {chartData.map((entry, index) => (
-              <Cell 
-                key={`cell-${index}`} 
-                fill="hsl(var(--accent))" 
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="w-full space-y-6">
+      {products.map((product) => {
+        const percentage = (product.vote_count / maxVotes) * 100
+        
+        return (
+          <div key={product.id} className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-foreground truncate flex-1">
+                {product.title}
+              </span>
+              <span className="text-xs font-bold text-accent ml-2 whitespace-nowrap">
+                {product.vote_count} votes
+              </span>
+            </div>
+            <div className="w-full bg-secondary rounded-full overflow-hidden h-8 relative">
+              <div
+                className="h-full bg-gradient-to-r from-accent to-accent/80 rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-3"
+                style={{ width: `${percentage}%` }}
+              >
+                {percentage > 10 && (
+                  <span className="text-xs font-bold text-accent-foreground">
+                    {Math.round(percentage)}%
+                  </span>
+                )}
+              </div>
+              {percentage <= 10 && percentage > 0 && (
+                <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-bold text-accent">
+                  {Math.round(percentage)}%
+                </span>
+              )}
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
