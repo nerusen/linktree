@@ -42,43 +42,52 @@ export default function ProductCard({
   }
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Product Image Container */}
-      <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden bg-secondary border border-foreground/10">
+    <div className="flex flex-col h-full group">
+      {/* Product Image Container - Modern Frame Design */}
+      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border border-foreground/20 shadow-lg transition-all duration-300 group-hover:shadow-xl">
+        {/* Image with subtle zoom on hover */}
         <Image
           src={product.image_url}
           alt={product.title}
           fill
-          className="object-cover"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
           crossOrigin="anonymous"
         />
         
-        {/* Terpilih Badge - Green with border */}
+        {/* Overlay gradient on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        
+        {/* Terpilih Badge - Green with glowing border */}
         {isTopVoted && (
-          <div className="absolute top-2 right-2 z-10 bg-green-600 text-white px-2 py-1 rounded-md text-xs font-bold border border-green-400">
+          <div className="absolute top-3 right-3 z-10 bg-emerald-500/90 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-emerald-300 shadow-lg backdrop-blur-sm">
             Terpilih
           </div>
         )}
       </div>
 
       {/* Product Title */}
-      <h3 className="text-xs font-medium text-foreground/80 mb-2 line-clamp-2 h-7">
+      <h3 className="text-sm font-semibold text-foreground mb-3 line-clamp-2 min-h-9">
         {product.title}
       </h3>
 
-      {/* Vote Button with Bloom Effect */}
+      {/* Vote Button - Modern Minimal Style */}
       <button
         onClick={handleVote}
         disabled={hasVoted || isVoting}
-        className={`relative w-full py-2 px-3 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+        className={`relative mt-auto w-full py-3 px-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden ${
           hasVoted
-            ? 'bg-foreground/10 text-foreground/70 cursor-default'
-            : 'bg-foreground text-background hover:shadow-lg'
-        } ${showBloom ? 'animate-bloom' : ''}`}
+            ? 'bg-foreground/8 text-foreground/60 cursor-default border border-foreground/15'
+            : 'bg-foreground text-background hover:bg-foreground/95 active:scale-95'
+        } ${showBloom ? 'animate-bloom shadow-[0_0_30px_rgba(255,255,255,0.4)]' : ''}`}
       >
-        <span>{hasVoted ? '✓' : 'Vote'}</span>
-        <span className="font-bold text-xs bg-white/20 px-1.5 py-0.5 rounded">
+        {/* Button shine effect on hover */}
+        {!hasVoted && (
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
+        )}
+        
+        <span className="relative z-10 font-semibold">{hasVoted ? '✓ Voted' : 'Vote'}</span>
+        <span className="relative z-10 font-bold text-xs bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
           {product.vote_count}
         </span>
       </button>
