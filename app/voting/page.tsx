@@ -194,7 +194,7 @@ export default function VotingPage() {
         </div>
 
         {/* Profile Section */}
-        <div className="mb-12 sm:mb-16">
+        <div className="mb-8 sm:mb-10">
           <ProfileSection
             profileImage="https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg"
             name="Farewell Design"
@@ -203,18 +203,16 @@ export default function VotingPage() {
           />
         </div>
 
-
-
-        {/* Chart Section */}
-        <div className="bg-card rounded-xl border border-border p-4 sm:p-6 mb-10 sm:mb-14">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6">
-            Vote Distribution
-          </h2>
-          <VotingChart products={products} />
+        {/* Total Votes Counter */}
+        <div className="text-center mb-12 sm:mb-16">
+          <p className="text-4xl sm:text-5xl font-bold text-foreground">
+            {products.reduce((sum, p) => sum + p.vote_count, 0)}
+            <span className="text-xl sm:text-2xl ml-3 text-foreground/70">Suara</span>
+          </p>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
           {(() => {
             const maxVotes = Math.max(...products.map(p => p.vote_count), 0)
             return products.map((product, index) => (
@@ -232,6 +230,11 @@ export default function VotingPage() {
               </div>
             ))
           })()}
+        </div>
+
+        {/* Chart Section - Bottom */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <VotingChart products={products} />
         </div>
       </div>
     </main>

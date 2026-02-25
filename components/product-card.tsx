@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
 
 interface Product {
   id: string
@@ -26,9 +25,11 @@ export default function ProductCard({
   isTopVoted = false,
 }: ProductCardProps) {
   const [isVoting, setIsVoting] = useState(false)
+  const [showBloom, setShowBloom] = useState(false)
 
   const handleVote = async () => {
     if (hasVoted || isVoting) return
+    setShowBloom(true)
     setIsVoting(true)
     try {
       await onVote()
@@ -36,62 +37,51 @@ export default function ProductCard({
       console.error('Vote error:', error)
     } finally {
       setIsVoting(false)
+      setTimeout(() => setShowBloom(false), 600)
     }
   }
 
   return (
-    <div className="group flex flex-col h-full">
-      {/* Product Image Container - Rounded corners matching LinkButton design */}
-      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-card border border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg">
+    <div className="flex flex-col h-full">
+      {/* Product Image Container */}
+      <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden bg-secondary border border-foreground/10">
         <Image
           src={product.image_url}
           alt={product.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
           crossOrigin="anonymous"
         />
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
-        {/* Terpilih Badge */}
+        {/* Terpilih Badge - Green with border */}
         {isTopVoted && (
-          <div className="absolute top-3 right-3 z-10">
-            <Badge className="bg-accent/90 text-accent-foreground text-xs font-bold backdrop-blur-sm shadow-lg">
-              Terpilih
-            </Badge>
+          <div className="absolute top-2 right-2 z-10 bg-green-600 text-white px-2 py-1 rounded-md text-xs font-bold border border-green-400">
+            Terpilih
           </div>
         )}
       </div>
 
-      {/* Product Info */}
-      <div className="flex-1 flex flex-col">
-        <h3 className="text-sm font-semibold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-          {product.title}
-        </h3>
+      {/* Product Title */}
+      <h3 className="text-xs font-medium text-foreground/80 mb-2 line-clamp-2 h-7">
+        {product.title}
+      </h3>
 
-        {/* Vote Button */}
-        <button
-          onClick={handleVote}
-          disabled={hasVoted || isVoting}
-          className={`w-full py-2.5 px-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm ${
-            hasVoted
-              ? 'bg-secondary/50 text-secondary-foreground cursor-default border border-border'
-              : 'bg-accent text-accent-foreground hover:bg-accent/90 active:scale-95'
-          } ${isVoting ? 'opacity-70 cursor-wait' : ''}`}
-        >
-          <span>Vote</span>
-          <span className="font-bold bg-white/20 px-2 py-0.5 rounded-md text-xs">
-            {product.vote_count}
-          </span>
-        </button>
-
-        {hasVoted && (
-          <p className="text-xs text-muted-foreground mt-2 text-center font-medium">
-            ✓ Already voted
-          </p>
-        )}
-      </div>
+      {/* Vote Button with Bloom Effect */}
+      <button
+        onClick={handleVote}
+        disabled={hasVoted || isVoting}
+        className={`relative w-full py-2 px-3 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+          hasVoted
+            ? 'bg-foreground/10 text-foreground/70 cursor-default'
+            : 'bg-foreground text-background hover:shadow-lg'
+        } ${showBloom ? 'animate-bloom' : ''}`}
+      >
+        <span>{hasVoted ? '✓' : 'Vote'}</span>
+        <span className="font-bold text-xs bg-white/20 px-1.5 py-0.5 rounded">
+          {product.vote_count}
+        </span>
+      </button>
     </div>
   )
 }

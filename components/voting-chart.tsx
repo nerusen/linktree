@@ -20,43 +20,30 @@ export default function VotingChart({ products }: VotingChartProps) {
   }, [])
 
   if (!isMounted) {
-    return <div className="w-full h-80 bg-secondary/50 rounded-lg animate-pulse" />
+    return <div className="w-full h-20 bg-secondary/30 rounded-lg animate-pulse" />
   }
 
   const maxVotes = Math.max(...products.map(p => p.vote_count), 1)
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-4">
       {products.map((product) => {
         const percentage = (product.vote_count / maxVotes) * 100
         
         return (
-          <div key={product.id} className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground truncate flex-1">
-                {product.title}
-              </span>
-              <span className="text-xs font-bold text-accent ml-2 whitespace-nowrap">
-                {product.vote_count} votes
-              </span>
-            </div>
-            <div className="w-full bg-secondary rounded-full overflow-hidden h-8 relative">
+          <div key={product.id} className="flex items-center gap-3">
+            <span className="text-xs font-medium text-foreground/70 min-w-fit w-24 truncate">
+              {product.title}
+            </span>
+            <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-accent to-accent/80 rounded-full transition-all duration-500 ease-out flex items-center justify-end pr-3"
+                className="h-full bg-foreground/60 transition-all duration-500"
                 style={{ width: `${percentage}%` }}
-              >
-                {percentage > 10 && (
-                  <span className="text-xs font-bold text-accent-foreground">
-                    {Math.round(percentage)}%
-                  </span>
-                )}
-              </div>
-              {percentage <= 10 && percentage > 0 && (
-                <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-bold text-accent">
-                  {Math.round(percentage)}%
-                </span>
-              )}
+              />
             </div>
+            <span className="text-xs font-semibold text-foreground/80 min-w-fit">
+              {product.vote_count}
+            </span>
           </div>
         )
       })}
