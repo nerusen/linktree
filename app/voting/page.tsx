@@ -169,7 +169,7 @@ export default function VotingPage() {
               <div className="absolute inset-0 rounded-full border-2 border-accent/20"></div>
               <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent animate-spin"></div>
             </div>
-            <p className="text-foreground/60 text-sm">Farewell Design</p>
+            <p className="text-foreground/60 text-sm">Farewell Voting</p>
           </div>
         </div>
       </div>
