@@ -43,20 +43,23 @@ export default function ProductCard({
 
   return (
     <div className="flex flex-col h-full group">
-      {/* Product Image Container - Modern Frame Design */}
-      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border border-foreground/20 shadow-lg transition-all duration-300 group-hover:shadow-xl">
-        {/* Image with subtle zoom on hover */}
+      {/* Product Image Container - Grid Design */}
+      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border border-foreground/20 shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:border-foreground/30">
+        {/* Image with smooth zoom */}
         <Image
           src={product.image_url}
           alt={product.title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
           crossOrigin="anonymous"
         />
         
+        {/* Grid Overlay */}
+        <div className="absolute inset-0 grid-overlay opacity-100 group-hover:opacity-0 transition-opacity duration-700" />
+        
         {/* Overlay gradient on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
         
         {/* Terpilih Badge - Green with glowing border */}
         {isTopVoted && (
@@ -67,27 +70,30 @@ export default function ProductCard({
       </div>
 
       {/* Product Title */}
-      <h3 className="text-sm font-semibold text-foreground mb-3 line-clamp-2 min-h-9">
+      <h3 className="text-sm font-semibold text-foreground mb-4 line-clamp-2 min-h-9 transition-colors duration-300">
         {product.title}
       </h3>
 
-      {/* Vote Button - Modern Minimal Style */}
+      {/* Vote Button - Grid Design with Smooth Animation */}
       <button
         onClick={handleVote}
         disabled={hasVoted || isVoting}
-        className={`relative mt-auto w-full py-3 px-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden ${
+        className={`relative mt-auto w-full py-3 px-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-500 flex items-center justify-center gap-2 overflow-hidden ${
           hasVoted
             ? 'bg-foreground/8 text-foreground/60 cursor-default border border-foreground/15'
-            : 'bg-foreground text-background hover:bg-foreground/95 active:scale-95'
-        } ${showBloom ? 'animate-bloom shadow-[0_0_30px_rgba(255,255,255,0.4)]' : ''}`}
+            : 'bg-foreground text-background hover:shadow-lg active:scale-95'
+        } ${showBloom ? 'animate-bloom' : ''}`}
       >
+        {/* Button grid background */}
+        <div className="absolute inset-0 grid-overlay opacity-0 transition-opacity duration-500" />
+        
         {/* Button shine effect on hover */}
         {!hasVoted && (
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-white" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-all duration-500 bg-white" />
         )}
         
-        <span className="relative z-10 font-semibold">{hasVoted ? '✓ Voted' : 'Vote'}</span>
-        <span className="relative z-10 font-bold text-xs bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm">
+        <span className="relative z-10 font-semibold transition-all duration-300">{hasVoted ? '✓ Voted' : 'Vote'}</span>
+        <span className="relative z-10 font-bold text-xs bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm transition-all duration-300">
           {product.vote_count}
         </span>
       </button>
