@@ -196,10 +196,10 @@ export default function VotingPage() {
         {/* Profile Section */}
         <div className="mb-12 sm:mb-16">
           <ProfileSection
-            profileImage="https://ik.imagekit.io/8sxh7zirl/20260203_152951.jpg"
-            name="Farewell Design"
-            subtitle="Product Voting Poll"
-            bio="Vote for your favorite design and help us choose the best product direction"
+            profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260225095212.png"
+            name="Farewell Vote"
+            subtitle="Design Voting Poll"
+            bio="•°×Vote for your favorite design×°•"
           />
         </div>
 
