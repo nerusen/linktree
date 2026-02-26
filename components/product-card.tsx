@@ -2,12 +2,12 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import { Badge } from '@/components/ui/badge'
 
 interface Product {
   id: string
   title: string
   image_url: string
+  description?: string
   order: number
   vote_count: number
 }
@@ -17,6 +17,7 @@ interface ProductCardProps {
   hasVoted: boolean
   onVote: () => void
   isTopVoted?: boolean
+  onImageClick?: () => void
 }
 
 export default function ProductCard({
@@ -24,11 +25,14 @@ export default function ProductCard({
   hasVoted,
   onVote,
   isTopVoted = false,
+  onImageClick,
 }: ProductCardProps) {
   const [isVoting, setIsVoting] = useState(false)
+  const [showBloom, setShowBloom] = useState(false)
 
   const handleVote = async () => {
     if (hasVoted || isVoting) return
+    setShowBloom(true)
     setIsVoting(true)
     try {
       await onVote()
@@ -36,62 +40,78 @@ export default function ProductCard({
       console.error('Vote error:', error)
     } finally {
       setIsVoting(false)
+      setTimeout(() => setShowBloom(false), 600)
     }
   }
 
   return (
-    <div className="group flex flex-col h-full">
-      {/* Product Image Container - Rounded corners matching LinkButton design */}
-      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-card border border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg">
+    <div className="flex flex-col h-full group">
+      {/* Product Image Container - Grid Design */}
+      <button
+        onClick={onImageClick}
+        className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border-2 border-foreground/20 shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:border-foreground/40 hover:cursor-pointer"
+      >
+        {/* Image with smooth zoom */}
         <Image
           src={product.image_url}
           alt={product.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-500"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
           crossOrigin="anonymous"
         />
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
-        {/* Terpilih Badge */}
+        {/* Grid Overlay */}
+        <div className="absolute inset-0 grid-overlay opacity-100 group-hover:opacity-0 transition-opacity duration-700" />
+        
+        {/* Overlay gradient on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
+        
+        {/* Terpilih Badge - Green with glowing border */}
         {isTopVoted && (
-          <div className="absolute top-3 right-3 z-10">
-            <Badge className="bg-accent/90 text-accent-foreground text-xs font-bold backdrop-blur-sm shadow-lg">
-              Terpilih
-            </Badge>
+          <div className="absolute top-3 right-3 z-10 bg-emerald-500/90 text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-emerald-300 shadow-lg backdrop-blur-sm">
+            Terpilih
           </div>
         )}
-      </div>
+      </button>
 
-      {/* Product Info */}
-      <div className="flex-1 flex flex-col">
-        <h3 className="text-sm font-semibold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-          {product.title}
-        </h3>
+      {/* Product Title */}
+      <h3 className="text-base font-bold text-foreground mb-2 line-clamp-2 min-h-10 transition-colors duration-300">
+        {product.title}
+      </h3>
 
-        {/* Vote Button */}
-        <button
-          onClick={handleVote}
-          disabled={hasVoted || isVoting}
-          className={`w-full py-2.5 px-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 text-sm ${
-            hasVoted
-              ? 'bg-secondary/50 text-secondary-foreground cursor-default border border-border'
-              : 'bg-accent text-accent-foreground hover:bg-accent/90 active:scale-95'
-          } ${isVoting ? 'opacity-70 cursor-wait' : ''}`}
-        >
-          <span>Vote</span>
-          <span className="font-bold bg-white/20 px-2 py-0.5 rounded-md text-xs">
-            {product.vote_count}
-          </span>
-        </button>
+      {/* Product Description - Truncated */}
+      {product.description && (
+        <p className="text-sm text-foreground/60 mb-4 line-clamp-2 min-h-10 flex-1">
+          {product.description.length > 80
+            ? product.description.substring(0, 80) + '...'
+            : product.description}
+        </p>
+      )}
 
-        {hasVoted && (
-          <p className="text-xs text-muted-foreground mt-2 text-center font-medium">
-            ✓ Already voted
-          </p>
+      {/* Vote Button - Grid Design with Smooth Animation */}
+      <button
+        onClick={handleVote}
+        disabled={hasVoted || isVoting}
+        className={`relative mt-auto w-full py-3 px-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-500 flex items-center justify-center gap-2 overflow-hidden ${
+          hasVoted
+            ? 'bg-foreground/8 text-foreground/60 cursor-default border border-foreground/15'
+            : 'bg-foreground text-background hover:shadow-lg active:scale-95'
+        } ${showBloom ? 'animate-bloom' : ''}`}
+      >
+        {/* Button grid background */}
+        <div className="absolute inset-0 grid-overlay opacity-0 transition-opacity duration-500" />
+        
+        {/* Button shine effect on hover */}
+        {!hasVoted && (
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-all duration-500 bg-white" />
         )}
-      </div>
+        
+        <span className="relative z-10 font-semibold transition-all duration-300">{hasVoted ? '✓ Voted' : 'Vote'}</span>
+        <span className="relative z-10 font-bold text-xs bg-white/20 px-2 py-0.5 rounded-md backdrop-blur-sm transition-all duration-300">
+          {product.vote_count}
+        </span>
+      </button>
     </div>
   )
 }
