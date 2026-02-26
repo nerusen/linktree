@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import VotingChart from '@/components/voting-chart'
 import ProductCard from '@/components/product-card'
+import ProductModal from '@/components/product-modal'
 import ProfileSection from '@/components/profile-section'
 import { VotingDbInit } from '@/components/voting-db-init'
 import { getClientIdentifier } from '@/lib/vote-utils'
@@ -12,6 +13,7 @@ interface Product {
   id: string
   title: string
   image_url: string
+  description?: string
   order: number
   vote_count: number
 }
@@ -21,6 +23,7 @@ export default function VotingPage() {
   const [loading, setLoading] = useState(true)
   const [currentVote, setCurrentVote] = useState<string | null>(null)
   const [clientId, setClientId] = useState<string>('')
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const supabase = createClient()
 
   useEffect(() => {
@@ -35,7 +38,7 @@ export default function VotingPage() {
       // Fetch products and their vote counts
       const { data: productsData, error: productsError } = await supabase
         .from('farewell_products')
-        .select('id, title, image_url, order')
+        .select('id, title, image_url, description, order')
         .order('order', { ascending: true })
 
       if (productsError) {
@@ -231,6 +234,7 @@ export default function VotingPage() {
                     hasVoted={currentVote === product.id}
                     onVote={() => handleVote(product.id)}
                     isTopVoted={maxVotes > 0 && product.vote_count === maxVotes}
+                    onImageClick={() => setSelectedProduct(product)}
                   />
                 </div>
               ))
@@ -243,6 +247,20 @@ export default function VotingPage() {
           <VotingChart products={products} />
         </div>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          hasVoted={currentVote === selectedProduct.id}
+          onVote={() => {
+            handleVote(selectedProduct.id)
+            setSelectedProduct(null)
+          }}
+          isTopVoted={Math.max(...products.map(p => p.vote_count), 0) > 0 && selectedProduct.vote_count === Math.max(...products.map(p => p.vote_count), 0)}
+        />
+      )}
     </main>
   )
 }

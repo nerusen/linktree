@@ -7,6 +7,7 @@ interface Product {
   id: string
   title: string
   image_url: string
+  description?: string
   order: number
   vote_count: number
 }
@@ -16,6 +17,7 @@ interface ProductCardProps {
   hasVoted: boolean
   onVote: () => void
   isTopVoted?: boolean
+  onImageClick?: () => void
 }
 
 export default function ProductCard({
@@ -23,6 +25,7 @@ export default function ProductCard({
   hasVoted,
   onVote,
   isTopVoted = false,
+  onImageClick,
 }: ProductCardProps) {
   const [isVoting, setIsVoting] = useState(false)
   const [showBloom, setShowBloom] = useState(false)
@@ -44,7 +47,10 @@ export default function ProductCard({
   return (
     <div className="flex flex-col h-full group">
       {/* Product Image Container - Grid Design */}
-      <div className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border border-foreground/20 shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:border-foreground/30">
+      <button
+        onClick={onImageClick}
+        className="relative w-full aspect-square mb-4 rounded-3xl overflow-hidden bg-gradient-to-br from-foreground/5 to-foreground/10 border-2 border-foreground/20 shadow-lg transition-all duration-500 group-hover:shadow-xl group-hover:border-foreground/40 hover:cursor-pointer"
+      >
         {/* Image with smooth zoom */}
         <Image
           src={product.image_url}
@@ -67,12 +73,21 @@ export default function ProductCard({
             Terpilih
           </div>
         )}
-      </div>
+      </button>
 
       {/* Product Title */}
-      <h3 className="text-sm font-semibold text-foreground mb-4 line-clamp-2 min-h-9 transition-colors duration-300">
+      <h3 className="text-base font-bold text-foreground mb-2 line-clamp-2 min-h-10 transition-colors duration-300">
         {product.title}
       </h3>
+
+      {/* Product Description - Truncated */}
+      {product.description && (
+        <p className="text-sm text-foreground/60 mb-4 line-clamp-2 min-h-10 flex-1">
+          {product.description.length > 80
+            ? product.description.substring(0, 80) + '...'
+            : product.description}
+        </p>
+      )}
 
       {/* Vote Button - Grid Design with Smooth Animation */}
       <button
