@@ -19,27 +19,35 @@ export default function VotersAvatarGroup() {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        // Get all voters from product_votes table
-        const { data: votes, error } = await supabase
+        // Get all voters from product_votes table using email
+        const { data: votes, error: votesError } = await supabase
           .from('product_votes')
-          .select('voter_ip_hash')
+          .select('user_email')
           .distinct()
 
-        if (error) {
-          console.error('Error fetching voters:', error)
+        if (votesError) {
+          console.error('Error fetching voters:', votesError)
           setLoading(false)
           return
         }
 
         setTotalVoters(votes?.length || 0)
 
-        // Get user profiles who have voted
-        const { data: profiles } = await supabase
-          .from('user_profiles')
-          .select('id, avatar_url, username')
-          .limit(5)
+        // Get user profiles who have voted (first 5)
+        const voterEmails = votes?.map((v: any) => v.user_email) || []
+        
+        let profiles: VoterProfile[] = []
+        
+        if (voterEmails.length > 0) {
+          const { data: userProfiles } = await supabase
+            .from('user_profiles')
+            .select('id, avatar_url, username')
+            .in('email', voterEmails.slice(0, 5))
 
-        setVoters(profiles || [])
+          profiles = userProfiles || []
+        }
+
+        setVoters(profiles)
       } catch (err) {
         console.error('Error:', err)
       } finally {

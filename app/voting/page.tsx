@@ -24,7 +24,7 @@ export default function VotingPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [currentVote, setCurrentVote] = useState<string | null>(null)
-  const [clientId, setClientId] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string | null>(null)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isVotingOpen, setIsVotingOpen] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -32,22 +32,21 @@ export default function VotingPage() {
   const supabase = createClient()
 
   useEffect(() => {
-    // Check if user is authenticated
+    // Check if user is authenticated and get their email
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      setIsAuthenticated(!!user)
+      if (user?.email) {
+        setIsAuthenticated(true)
+        setUserEmail(user.email)
+      } else {
+        setIsAuthenticated(false)
+        setUserEmail(null)
+      }
     }
     checkAuth()
   }, [supabase])
 
   useEffect(() => {
-    // Get client identifier
-    getClientIdentifier().then(id => setClientId(id))
-  }, [])
-
-  useEffect(() => {
-    if (!clientId) return
-
     const fetchProducts = async () => {
       // Fetch voting status
       const { data: votingStatusData } = await supabase
@@ -86,15 +85,17 @@ export default function VotingPage() {
 
       setProducts(productsWithVotes)
       
-      // Check which product the user has currently voted for
-      const { data: userVote } = await supabase
-        .from('product_votes')
-        .select('product_id')
-        .eq('voter_ip_hash', clientId)
-        .single()
+      // Check which product the user has currently voted for (only if authenticated)
+      if (userEmail) {
+        const { data: userVote } = await supabase
+          .from('product_votes')
+          .select('product_id')
+          .eq('user_email', userEmail)
+          .single()
 
-      if (userVote?.product_id) {
-        setCurrentVote(userVote.product_id)
+        if (userVote?.product_id) {
+          setCurrentVote(userVote.product_id)
+        }
       }
       
       setLoading(false)
@@ -122,13 +123,11 @@ export default function VotingPage() {
     return () => {
       subscription.unsubscribe()
     }
-  }, [clientId])
+  }, [userEmail])
 
   const handleVote = async (productId: string) => {
-    if (!clientId) return
-
     // Check if user is authenticated
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !userEmail) {
       setNotificationMessage('Silakan login terlebih dahulu untuk melakukan voting')
       setTimeout(() => setNotificationMessage(null), 4000)
       return
@@ -152,7 +151,7 @@ export default function VotingPage() {
         const { error: updateError } = await supabase
           .from('product_votes')
           .update({ product_id: productId })
-          .eq('voter_ip_hash', clientId)
+          .eq('user_email', userEmail)
 
         if (updateError) {
           console.error('Error updating vote:', updateError)
@@ -178,7 +177,7 @@ export default function VotingPage() {
           .insert([
             {
               product_id: productId,
-              voter_ip_hash: clientId,
+              user_email: userEmail,
             },
           ])
 
