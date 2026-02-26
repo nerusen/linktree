@@ -18,6 +18,8 @@ interface ProductCardProps {
   onVote: () => void
   isTopVoted?: boolean
   onImageClick?: () => void
+  isVotingOpen?: boolean
+  isAuthenticated?: boolean
 }
 
 export default function ProductCard({
@@ -26,12 +28,14 @@ export default function ProductCard({
   onVote,
   isTopVoted = false,
   onImageClick,
+  isVotingOpen = true,
+  isAuthenticated = false,
 }: ProductCardProps) {
   const [isVoting, setIsVoting] = useState(false)
   const [showBloom, setShowBloom] = useState(false)
 
   const handleVote = async () => {
-    if (hasVoted || isVoting) return
+    if (hasVoted || isVoting || !isVotingOpen || !isAuthenticated) return
     setShowBloom(true)
     setIsVoting(true)
     try {
@@ -56,7 +60,9 @@ export default function ProductCard({
           src={product.image_url}
           alt={product.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          className={`object-cover group-hover:scale-110 transition-all duration-700 ease-out ${
+            !isVotingOpen && !isTopVoted ? 'grayscale' : ''
+          }`}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
           crossOrigin="anonymous"
         />
@@ -92,9 +98,11 @@ export default function ProductCard({
       {/* Vote Button - Grid Design with Smooth Animation */}
       <button
         onClick={handleVote}
-        disabled={hasVoted || isVoting}
+        disabled={hasVoted || isVoting || !isVotingOpen || !isAuthenticated}
         className={`relative mt-auto w-full py-3 px-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-500 flex items-center justify-center gap-2 overflow-hidden ${
-          hasVoted
+          !isVotingOpen || !isAuthenticated
+            ? 'bg-foreground/8 text-foreground/60 cursor-default border border-foreground/15'
+            : hasVoted
             ? 'bg-foreground/8 text-foreground/60 cursor-default border border-foreground/15'
             : 'bg-foreground text-background hover:shadow-lg active:scale-95'
         } ${showBloom ? 'animate-bloom' : ''}`}

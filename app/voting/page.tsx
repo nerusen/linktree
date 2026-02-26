@@ -6,6 +6,8 @@ import VotingChart from '@/components/voting-chart'
 import ProductCard from '@/components/product-card'
 import ProductModal from '@/components/product-modal'
 import ProfileSection from '@/components/profile-section'
+import AuthHeader from '@/components/auth-header'
+import VotersAvatarGroup from '@/components/voters-avatar-group'
 import { VotingDbInit } from '@/components/voting-db-init'
 import { getClientIdentifier } from '@/lib/vote-utils'
 
@@ -24,7 +26,19 @@ export default function VotingPage() {
   const [currentVote, setCurrentVote] = useState<string | null>(null)
   const [clientId, setClientId] = useState<string>('')
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [isVotingOpen, setIsVotingOpen] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [notificationMessage, setNotificationMessage] = useState<string | null>(null)
   const supabase = createClient()
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setIsAuthenticated(!!user)
+    }
+    checkAuth()
+  }, [supabase])
 
   useEffect(() => {
     // Get client identifier
@@ -35,6 +49,16 @@ export default function VotingPage() {
     if (!clientId) return
 
     const fetchProducts = async () => {
+      // Fetch voting status
+      const { data: votingStatusData } = await supabase
+        .from('voting_status')
+        .select('is_open')
+        .single()
+
+      if (votingStatusData) {
+        setIsVotingOpen(votingStatusData.is_open)
+      }
+
       // Fetch products and their vote counts
       const { data: productsData, error: productsError } = await supabase
         .from('farewell_products')
@@ -102,6 +126,20 @@ export default function VotingPage() {
 
   const handleVote = async (productId: string) => {
     if (!clientId) return
+
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      setNotificationMessage('Silakan login terlebih dahulu untuk melakukan voting')
+      setTimeout(() => setNotificationMessage(null), 4000)
+      return
+    }
+
+    // Check if voting is open
+    if (!isVotingOpen) {
+      setNotificationMessage('Voting telah ditutup')
+      setTimeout(() => setNotificationMessage(null), 4000)
+      return
+    }
 
     try {
       if (currentVote === productId) {
@@ -182,9 +220,22 @@ export default function VotingPage() {
   return (
     <main className="min-h-screen bg-background grid-background relative overflow-hidden">
       <VotingDbInit />
+      <AuthHeader />
       
       {/* Grid background overlay */}
       <div className="absolute inset-0 grid-overlay pointer-events-none" />
+      
+      {/* Notification */}
+      {notificationMessage && (
+        <div className="fixed top-4 left-4 right-4 sm:left-1/2 sm:right-auto sm:transform sm:-translate-x-1/2 max-w-md z-50 animate-fade-in">
+          <div className="flex items-center gap-3 px-4 py-3 bg-destructive/90 text-destructive-foreground rounded-lg shadow-lg border border-destructive/50 backdrop-blur-sm">
+            <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <p className="text-sm font-medium">{notificationMessage}</p>
+          </div>
+        </div>
+      )}
       
       <div className="relative z-10 container mx-auto px-4 py-8 sm:py-12 max-w-6xl">
         {/* Back Button */}
@@ -206,16 +257,21 @@ export default function VotingPage() {
             profileImage="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260225095212.png"
             name="Farewell Vote"
             subtitle="Design Voting Poll"
-            bio="•°×Vote for your favorite design×°•"
+            bio=""
           />
         </div>
 
         {/* Total Votes Counter */}
-        <div className="text-center mb-14 sm:mb-16">
-          <p className="text-5xl sm:text-6xl font-bold text-foreground transition-all duration-300">
+        <div className="text-center mb-8 sm:mb-10">
+          <p className="text-5xl sm:text-6xl font-bold text-foreground transition-all duration-300 mb-4">
             {products.reduce((sum, p) => sum + p.vote_count, 0)}
             <span className="text-2xl sm:text-3xl ml-3 text-foreground/60 font-semibold">Suara</span>
           </p>
+        </div>
+
+        {/* Voters Avatar Group */}
+        <div className="mb-14 sm:mb-16">
+          <VotersAvatarGroup />
         </div>
 
         {/* Products Grid Section */}
@@ -235,6 +291,8 @@ export default function VotingPage() {
                     onVote={() => handleVote(product.id)}
                     isTopVoted={maxVotes > 0 && product.vote_count === maxVotes}
                     onImageClick={() => setSelectedProduct(product)}
+                    isVotingOpen={isVotingOpen}
+                    isAuthenticated={isAuthenticated}
                   />
                 </div>
               ))
