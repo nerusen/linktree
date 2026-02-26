@@ -54,14 +54,26 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md">
         {/* Back Button */}
         <a
-          href="/"
+          href="/voting"
           className="inline-flex items-center gap-2 mb-8 px-3 py-2 text-sm font-medium text-foreground/60 hover:text-foreground transition-colors duration-300"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back to Home
+          Back to Voting
         </a>
+
+        {/* Banner Image */}
+        <div className="mb-8 w-full h-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-foreground/10 shadow-lg">
+          <Image
+            src="https://ik.imagekit.io/8sxh7zirl/Tak%20berjudul87_20260225095212.png"
+            alt="Farewell Design Banner"
+            width={600}
+            height={200}
+            className="w-full h-full object-cover"
+            priority
+          />
+        </div>
 
         {/* Login Card */}
         <div className="bg-card border-2 border-foreground/10 rounded-2xl p-8 sm:p-10 shadow-lg">
