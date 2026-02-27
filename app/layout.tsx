@@ -49,7 +49,8 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <ThemeProvider>
           {children}
-          <ChatRoom />
+          {/* Komponen di bawah ini dikomentari agar tidak muncul sementara */}
+          {/* <ChatRoom /> */}
         </ThemeProvider>
         <Toaster position="top-center" richColors theme="system" />
         <Analytics />
