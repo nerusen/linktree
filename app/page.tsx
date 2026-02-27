@@ -113,7 +113,7 @@ const links: LinkItem[] = [
     showThumbnail: true,
     thumbnailTag: 'Voting',
     showThumbnailTag: true,
-    thumbnailTagBg: 'bg-red-600/50 backdrop-blur-sm border border-red-600 rounded-full',
+    thumbnailTagBg: 'bg-neutral-900/50 backdrop-blur-sm border border-neutral-900 rounded-full',
     thumbnailTagText: 'text-white font-bold',
     showNotification: false,
   },
